@@ -1,9 +1,36 @@
 Stringz
 =====
 
-Stringz makes it easy to access externalized strings which are stored in default
-Java Resource Bundles.
+stringz makes it easy to access externalized strings which are stored in default
+Java Resource Bundles. It provides some additional features like properties file
+inheritance to include translation keys from other resource bundles.
 
+
+
+## License
+stringz is distributed under the MIT License. See `LICENSE.md` in this directory
+for detailed information.
+
+
+
+## Building
+Building stringz requires Apache Maven to be installed. You may then run 
+`mvn install` to build stringz and install it into your local repository. If you 
+want to add stringz to your existing projects, declare the following dependency 
+within your `pom.xml`:
+
+```xml
+    <dependency>
+      <groupId>de.skuzzle</groupId>
+      <artifactId>stringz</artifactId>
+      <version>1.0-SNAPSHOT</version>
+      <scope>build</scope>
+    </dependency>
+```
+
+
+
+## Basic Usage
 ```java
 public class MSG implements Messages {
     static {
@@ -15,7 +42,7 @@ public class MSG implements Messages {
     public static String cancel;
 ```
 
-The following is a properties file named 'MSG.properties' contained in the same 
+The following is a properties file named `MSG.properties` contained in the same 
 package as the `MSG` class above (as by Stringz default look up procedure, which 
 can be customized if needed):
 
@@ -25,7 +52,7 @@ back = Back
 cancel = Cancel
 ```
 
-This is a properties file named 'MSG_De.properties' within the same package:
+This is a properties file named `MSG_De.properties` within the same package:
 
 ```
 next = Weiter
