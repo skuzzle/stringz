@@ -21,12 +21,12 @@ want to add stringz to your existing projects, declare the following dependency
 within your `pom.xml`:
 
 ```xml
-    <dependency>
-        <groupId>de.skuzzle</groupId>
-        <artifactId>stringz</artifactId>
-        <version>1.0-SNAPSHOT</version>
-        <scope>build</scope>
-    </dependency>
+<dependency>
+    <groupId>de.skuzzle</groupId>
+    <artifactId>stringz</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <scope>build</scope>
+</dependency>
 ```
 
 
@@ -70,7 +70,7 @@ Calling `Stringz.init(Class)` will initialize all public static String fields
 with values read from a resource bundle using either a globally specified locale
 or a locale which can optionally be passed to the init method.
 
-You can now use the externalized Strings:
+You can now easily access the externalized Strings:
 
 ```java
 public class MyWizard {
