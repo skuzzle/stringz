@@ -1,9 +1,10 @@
-Stringz
+stringz
 =====
 
 stringz makes it easy to access externalized strings which are stored in default
 Java Resource Bundles. It provides some additional features like properties file
-inheritance to include translation keys from other resource bundles.
+inheritance to include translation keys from other resource bundles and 
+references to other keys within the same file.
 
 
 
@@ -21,18 +22,22 @@ within your `pom.xml`:
 
 ```xml
     <dependency>
-      <groupId>de.skuzzle</groupId>
-      <artifactId>stringz</artifactId>
-      <version>1.0-SNAPSHOT</version>
-      <scope>build</scope>
+        <groupId>de.skuzzle</groupId>
+        <artifactId>stringz</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <scope>build</scope>
     </dependency>
 ```
 
 
 
 ## Basic Usage
+Declare a class extending `Messages` with public static String fields whose 
+names conform to entries of the resource bundle which contains the translation.
+
 ```java
-public class MSG implements Messages {
+@ResourceMapping
+public class MSG {
     static {
         Stringz.init(MSG.class);
     }
@@ -62,8 +67,7 @@ cancel = Abbrechen
 
 Calling `Stringz.init(Class)` will initialize all public static String fields 
 with values read from a resource bundle using either a globally specified locale
-or a locale which can optionally be passed to the init method using a 
-`StringsConfiguration` instance.
+or a locale which can optionally be passed to the init method.
 
 You can now use the externalized Strings:
 

@@ -25,7 +25,7 @@ import java.lang.annotation.Target;
 public @interface FamilyLocator {
     /**
      * Defines the {@link BundleFamilyLocator} class to use when locating the bundle 
-     * family for a <tt>Messages</tt> class. A concrete implementation of the class
+     * family for a <tt>ResourceMapping</tt> class. A concrete implementation of the class
      * specified as value has to be registered with 
      * {@link Stringz#registerLocator(BundleFamilyLocator)}.
      * 

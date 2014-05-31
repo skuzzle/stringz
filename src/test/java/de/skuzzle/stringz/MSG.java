@@ -1,9 +1,8 @@
 package de.skuzzle.stringz;
 
-public class MSG implements Messages {
+@ResourceMapping("de.skuzzle.stringz.test")
+public class MSG {
 
-    public final static String BUNDLE_FAMILY = "de.skuzzle.stringz.test";
-    
     static {
         Stringz.init(MSG.class);
     }

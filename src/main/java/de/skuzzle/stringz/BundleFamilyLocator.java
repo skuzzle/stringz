@@ -1,13 +1,13 @@
 package de.skuzzle.stringz;
 
 /**
- * Strategy interface for finding the bundle family to use with a certain {@link Messages}
- * implementation. 
+ * Strategy interface for finding the bundle family to use with a certain 
+ * {@link ResourceMapping}. 
  * <a href="http://docs.oracle.com/javase/tutorial/i18n/resbundle/index.html">See the 
  * Oracle Online Trail about Resource Bundles</a> to learn about resource bundle families.
  * 
  * <p>Stringz provides some default strategies to locate the bundle family. Refer to 
- * {@link Messages} and {@link Stringz} documentation for more information.</p>
+ * {@link ResourceMapping} and {@link Stringz} documentation for more information.</p>
  * @author Simon Taddiken
  */
 public interface BundleFamilyLocator {

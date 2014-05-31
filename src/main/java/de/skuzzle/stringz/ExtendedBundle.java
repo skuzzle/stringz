@@ -13,6 +13,12 @@ import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * ResourceBundle implementation that decorates another ResourceBundle and provides
+ * inheritance of multiple specified bundles and key substitution.
+ * 
+ * @author Simon Taddiken
+ */
 class ExtendedBundle extends ResourceBundle {
 
     private final static class CacheKey {

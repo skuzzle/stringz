@@ -1,7 +1,8 @@
 package de.skuzzle.stringz;
 
 // name as test.properties in same package
-public class test implements Messages {
+@ResourceMapping
+public class test {
     
     static {
         Stringz.init(test.class);

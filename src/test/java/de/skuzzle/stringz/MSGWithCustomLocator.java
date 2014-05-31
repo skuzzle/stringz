@@ -1,7 +1,8 @@
 package de.skuzzle.stringz;
 
+@ResourceMapping
 @FamilyLocator(StaticFamilyLocator.class)
-public class MSGWithCustomLocator implements Messages {
+public class MSGWithCustomLocator {
     
     static {
         Stringz.init(MSGWithCustomLocator.class);

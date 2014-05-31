@@ -31,8 +31,7 @@ class CharsetBundleControl extends Control {
     }
 
     @Override
-    public ResourceBundle newBundle(String baseName, Locale locale,
-            String format,
+    public ResourceBundle newBundle(String baseName, Locale locale, String format,
             ClassLoader loader, boolean reload)
             throws IllegalAccessException, InstantiationException, IOException {
         // The below is a copy of the default implementation.
