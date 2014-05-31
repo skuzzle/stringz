@@ -32,8 +32,9 @@ within your `pom.xml`:
 
 
 ## Basic Usage
-Declare a class extending `Messages` with public static String fields whose 
-names conform to entries of the resource bundle which contains the translation.
+Declare a class marked with `@ResourceMapping` with public static String fields 
+whose names conform to entries of the resource bundle which contains the 
+translation.
 
 ```java
 @ResourceMapping
