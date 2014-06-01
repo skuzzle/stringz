@@ -1,6 +1,6 @@
 stringz
 =====
-
+[![Build Status](https://travis-ci.org/skuzzle/stringz.svg?branch=master)](https://travis-ci.org/skuzzle/stringz)
 stringz makes it easy to access externalized strings which are stored in default
 Java Resource Bundles. It provides some additional features like properties file
 inheritance to include translation keys from other resource bundles and 
