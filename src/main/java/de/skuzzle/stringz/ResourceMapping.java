@@ -7,9 +7,12 @@ import java.lang.annotation.Target;
 
 /**
  * <p>Maps a so called <em>Message Class</em> to a {@link java.util.ResourceBundle}.
- * A Message class is a Java class that only contains 
+ * A Message class can be any Java class that contains 
  * <tt>public static String</tt> fields which should be mapped to a corresponding 
- * entry within a {@link java.util.ResourceBundle} using their name.</p>
+ * entry within a {@link java.util.ResourceBundle} using their name. Normally, you would
+ * create a dedicated class which only holds those static String variables but it is
+ * also possible to {@link Stringz#init(Class) initialize} all static string fields of
+ * any domain class you specify.</p>
  * 
  * <p>This annotation provides the information that are needed in order to look up the 
  * ResourceBundle from which the mappings are loaded. The {@link #value()} field specifies
@@ -42,7 +45,7 @@ import java.lang.annotation.Target;
  * <p>In this example, there is no base name specified within the {@link ResourceMapping}
  * annotation. In this case, the Stringz class first looks for a public static String 
  * constant called <em>BUNDLE_FAMILY</em>. If this constant is not present, it will use
- * the name of the class prepended with the class's package name as base name. So in the 
+ * the the full qualified name of the class as base name. So in the 
  * above sample, the base name would resolve to <em>com.your.domain.MSG</em>.</p>
  * 
  * <p>You may also explicitly specify the base name to use:</p>
@@ -73,7 +76,11 @@ import java.lang.annotation.Target;
  * </pre>
  * 
  * After calling {@link Stringz#init(Class)}, all public and static String fields will
- * be initialized with a corresponding String from the ResourceBundle.
+ * be initialized with a corresponding String from the ResourceBundle. If you have static
+ * String fields in your class which should not be mapped to a resource, you can mark 
+ * them with the {@link NoResource} annotation. Otherwise, if <tt>Stringz</tt> encounters
+ * a public String field for which no key exists in the specified <tt>ResourceBundle</tt>,
+ * a {@link java.util.MissingResourceException} will be thrown upon initializing.
  * 
  * @author Simon Taddiken
  */

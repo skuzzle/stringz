@@ -16,7 +16,9 @@ import java.util.Set;
  * Provides automatic mapping from {@link ResourceBundle ResourceBundles} to
  * public variables of a class based on their names. Those classes are called
  * <em>Message classes</em> and must be marked with the {@link ResourceMapping}
- * annotation.
+ * annotation. Before using stringz, you should be aware of how ResourceBundles work
+ * (<a href="http://docs.oracle.com/javase/tutorial/i18n/resbundle/index.html">See the 
+ * Oracle Online Trail about Resource Bundles</a>).
  * 
  * <p>
  * Stringz uses default Java properties Resource Bundles in which externalized
@@ -319,8 +321,13 @@ public final class Stringz {
      * other String than the empty String, that String is used as base name for
      * resource bundle location. If the ResourceBundle could not be resolved
      * using the base name, a {@link java.util.MissingResourceException} is
-     * thrown.
-     * </p>
+     * thrown.</p>
+     * 
+     * <p>If the provided class is annotated with {@link ResourceControl}, the therein
+     * specified {@link ControlConfigurator} class will be used to create a 
+     * {@link java.util.ResourceBundle.Control} instance which in turn is used to resolve 
+     * the ResourceBundle from which the Strings are loaded. If no such annotation is 
+     * present, the Java default behavior is used.</p>
      * 
      * @param cls The class to initialize.
      * @param locale The locale used to locate the proper resource bundle.
@@ -337,6 +344,11 @@ public final class Stringz {
      *             {@link #registerLocator(BundleFamilyLocator) registered}. Or
      *             if the used {@link BundleFamilyLocator} fails to locate the
      *             bundle family.
+     * @throws ControlConfigurationException If the class is annotated with 
+     *             {@link ResourceControl} and the provided {@link ControlConfigurator}
+     *             class could not be instantiated or if its 
+     *             {@link ControlConfigurator#configure(ResourceMapping, String[]) configure} 
+     *             method failed to create a <tt>Control</tt> instance.
      */
     public static void init(Class<?> cls, Locale locale) {
         if (cls == null) {
@@ -386,6 +398,13 @@ public final class Stringz {
             });
     }
 
+    /**
+     * This method calls {@link #init(Class, Locale)} with the locale set by 
+     * {@link #setLocale(Locale)} as parameter. Please refer to this method for full
+     * documentation of how message classes are initialized.
+     * 
+     * @param cls The class to initialize.
+     */
     public static void init(Class<?> cls) {
         init(cls, Stringz.locale);
     }

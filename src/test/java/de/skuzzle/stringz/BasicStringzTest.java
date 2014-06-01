@@ -25,6 +25,24 @@ public class BasicStringzTest {
     }
     
     @Test
+    public void testMsgWithFieldBaseName() {
+        Assert.assertEquals("Some value", MSGWithFieldBaseName.testKey1);
+        Assert.assertEquals("A String with a Reference to 'Some value'", MSGWithFieldBaseName.testKey2);
+        Assert.assertEquals("This is a String with reference to A String with a Reference to 'Some value'", MSGWithFieldBaseName.testKey3);
+        Assert.assertEquals("Some value reference at the beginning", MSGWithFieldBaseName.testKey4);
+        Assert.assertEquals("reference at the end Some value", MSGWithFieldBaseName.testKey5);
+    }
+    
+    @Test
+    public void testMsgIgnoreFieldBaseName() {
+        Assert.assertEquals("Some value", MSGIgnoreFieldBaseName.testKey1);
+        Assert.assertEquals("A String with a Reference to 'Some value'", MSGIgnoreFieldBaseName.testKey2);
+        Assert.assertEquals("This is a String with reference to A String with a Reference to 'Some value'", MSGIgnoreFieldBaseName.testKey3);
+        Assert.assertEquals("Some value reference at the beginning", MSGIgnoreFieldBaseName.testKey4);
+        Assert.assertEquals("reference at the end Some value", MSGIgnoreFieldBaseName.testKey5);
+    }
+    
+    @Test
     public void testSwitchLocale() {
         Assert.assertEquals("Some value", MSG.testKey1);
         Assert.assertEquals("A String with a Reference to 'Some value'", MSG.testKey2);
