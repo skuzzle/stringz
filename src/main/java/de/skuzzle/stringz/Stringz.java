@@ -14,7 +14,7 @@ import java.util.Set;
 
 /**
  * Provides automatic mapping from {@link ResourceBundle ResourceBundles} to
- * public variable of a class based on their names. Those classes are called
+ * public variables of a class based on their names. Those classes are called
  * <em>Message classes</em> and must be marked with the {@link ResourceMapping}
  * annotation.
  * 
@@ -22,11 +22,27 @@ import java.util.Set;
  * Stringz uses default Java properties Resource Bundles in which externalized
  * Strings can be stored. The {@link #init(Class, Locale) init} method will then
  * try to map all public static String fields of a provided class to an entry of
- * a ResourceBundle which belongs to that class. This approach to access
- * externalized Strings has multiple advanteges over the standard approach using
- * <tt>bundle.getString(key)</tt>:
+ * a ResourceBundle which belongs to that class. A simple message class looks like this:
+ * </p>
+ * 
+ * <pre>
+ * &#64;ResourceMapping
+ * public class MSG {
+ *     static {
+ *         Stringz.init(MSG.class);
+ *     }
+ *     
+ *     public static String resourceKey;
+ *     public static String resourceKey1;
+ *     public static String resourceKeyX;
+ *     // ...
+ * }
+ * </pre>
+ * 
+ * <p>This approach to access externalized Strings has multiple advantages over the 
+ * standard approach using <tt>bundle.getString("resourceKey")</tt>:
  * <ul>
- * <li>Overhead of writing code which uses externalized Strings is minimized.
+ *   <li>Overhead of writing code which uses externalized Strings is minimized.
  * Instead of having to write code like
  * 
  * <pre>
@@ -51,16 +67,97 @@ import java.util.Set;
  * </ul>
  * 
  * <h2>ResourceBundle Lookup</h2>
- * Stringz uses the Java default mechanism for {@link ResourceBundle} lookup.
- * This involves specifying a <em>base name</em> and a locale. From that, a
- * String is constructed which is used to locate the resource to load. With
- * Stringz the task of specifying a base name to locate the resource can be
- * simplified.
+ * <p>Stringz provides two stages of customizing the resource bundle look up process.
+ * The first stage is about resolving the base name of a resource bundle which should be 
+ * mapped to a message class. To simplify the specification of the base name, the default
+ * behavior is to use the full qualified name of the message class itself.
+ * If your message class is <tt>com.you.domain.MSG</tt>, Stringz will use exactly that 
+ * String as base name to find <tt>MSG.properties, MSG_En.properties</tt>, etc. within 
+ * the same package of that class.</p>
+ * 
+ * <p>If this behavior does not suit your needs, there are several ways of customizing
+ * the base name used for a message class. First, there are two ways two explicitly
+ * specify a base name:
+ * <ol>
+ *   <li>Define the field <tt>public final static String BUNDLE_FAMILY</tt> in your 
+ *       message class. Then, the value of that field will be used as base name.
+ *   </li>
+ *   <li>The preferred way is to specify the base name directly within the 
+ *       {@link ResourceMapping} annotation (e.g. 
+ *       <tt>&#64;ResourceMapping("com.your.domain.BaseName")</tt>)
+ *   </li>
+ * </ol>
+ * Furthermore, you may {@link #registerLocator(BundleFamilyLocator) register} a 
+ * {@link BundleFamilyLocator} locator with the <tt>Stringz</tt> class and specify the 
+ * locator to use on your message class using the {@link FamilyLocator} annotation. Here 
+ * is a sample <tt>BundleFamilyLocator</tt>:</p>
+ * 
+ * <pre>
+ * public class StaticFamilyLocator implements BundleFamilyLocator {
+ *     &#64;Override
+ *     public String locateBundleFamily(Class<?> msg) {
+ *         return "com.your.domain.SomeBaseName";
+ *     }
+ * }
+ * </pre>
+ * 
+ * Register the locator with the <tt>Stringz</tt> class:
+ * 
+ * <pre>
+ * Stringz.registerLocator(new StaticFamilyLocator());
+ * </pre>
+ * 
+ * Specify the locator to use on your message class:
+ * <pre>
+ * &#64;ResourceMapping()   // important: leave value() attribute empty
+ * &#64;FamilyLocator(StaticFamilyLocator.class)
+ * public class MSG {
+ *     static {
+ *         Stringz.init(MSG.class);
+ *     }
+ *     // ..
+ * }
+ * </pre>
+ * 
+ * <p>The second stage of bundle look up customization is about the 
+ * {@link java.util.ResourceBundle.Control Control} instance which is used to create the
+ * ResourceBundle for your message class. By default, Stringz uses a <tt>Control</tt> 
+ * implementation which uses the {@link ResourceMapping#encoding() charset} specified in 
+ * the ResourceMapping and creates a {@link java.util.PropertyResourceBundle}. If you 
+ * want to supply a custom <tt>Control</tt> implementation, you can mark your message 
+ * class with the {@link ResourceControl}. This annotation specifies a 
+ * {@link ControlConfigurator} class which can be used to create a <tt>Control</tt> 
+ * instance which suits your needs. Below is an example usage. First, create your 
+ * <tt>ControlConfigurator</tt> class:</p>
+ * <pre>
+ * public class MyControlConfigurator implements ControlConfigurator {
+ *     &#64;Override
+ *     public Control configure(ResourceMapping mapping, String[] args) {
+ *         final String encoding = mapping.encoding();
+ *         return new YourControlImplementation(encoding);
+ *     }
+ * }
+ * </pre>
+ * Now, specify that this configurator should be used to read the <tt>ResourceBundle</tt>
+ * for your message class:
+ * <pre>
+ * &#64;ResourceMapping(value = "com.your.domain.BaseName", encoding = "iso-8859")
+ * &#64;ResourceControl(MyControlConfigurator.class)
+ * public class MSG {
+ *     static {
+ *         Stringz.init(MSG.class);
+ *     }
+ *     // ..
+ * }
+ * </pre>
+ * Stringz will create an instance of <tt>MyControlConfigurator</tt> and will then call
+ * its {@link ControlConfigurator#configure(ResourceMapping, String[]) configure} method
+ * to obtain a <tt>Control</tt> instance.
  * 
  * <h2>Extended ResourceBundle Features</h2>
- * Stringz allows you to use normal <tt>properties</tt> files to define
+ * Stringz allows you to use normal <tt>property</tt> files to define
  * externalized Strings but it offers some advanced features over normal
- * properties files.
+ * java property files.
  * 
  * <h3>Key References</h3>
  * Within a mapping pair, you can refer to any other key within the scope of
@@ -85,7 +182,7 @@ import java.util.Set;
  * String <tt>Please insert your Username and password</tt>.
  * 
  * <h3>Inclusion of Other Bundles</h3>
- * Properties files used by the Stringz class can also have a special key
+ * Properties files used by the <tt>Stringz</tt> class can also have a special key
  * mapping named <tt>&#64;include</tt> which expects a semicolon separated list
  * of other ResourceBundle baseNames to include into the scope of the current
  * file. This will make all mappings of the included bundles visible for key
@@ -95,6 +192,9 @@ import java.util.Set;
  * &#64;include = com.your.domain.CommonNames;
  * key = ${referenceToKeyFromIncludedBundle}
  * </pre>
+ * 
+ * Included key/value pairs will also be mapped to the String variables of your message
+ * class.
  * 
  * @author Simon Taddiken
  */
@@ -107,10 +207,12 @@ public final class Stringz {
      * Registered locators to find the bundle family name for a Messages
      * implementation
      */
-    private final static Map<Class<? extends BundleFamilyLocator>, BundleFamilyLocator> FAMILY_LOCATORS = new HashMap<>();
+    private final static Map<Class<? extends BundleFamilyLocator>, BundleFamilyLocator> 
+        FAMILY_LOCATORS = new HashMap<>();
 
     /** Stores Control instances which can be referenced by a name */
-    private final static Map<Class<? extends ControlConfigurator>, ControlConfigurator> CONTROLS = new HashMap<>();
+    private final static Map<Class<? extends ControlConfigurator>, ControlConfigurator> 
+        CONTROLS = new HashMap<>();
 
     /**
      * Registers the provided {@link BundleFamilyLocator}. The provided instance
