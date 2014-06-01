@@ -266,6 +266,9 @@ public final class Stringz {
      */
     public static void setLocale(Locale locale) {
         locale = locale == null ? Locale.getDefault() : locale;
+        // TODO: remove debug print
+        System.err.println(String.format("Switched locale from %s to %s", 
+                Stringz.locale, locale));
         final boolean eq = locale.equals(Stringz.locale);
         Stringz.locale = locale;
         if (!eq) {
