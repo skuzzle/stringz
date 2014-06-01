@@ -12,4 +12,7 @@ public class MSG {
     public static String testKey3;
     public static String testKey4;
     public static String testKey5;
+    
+    @NoResource
+    public static String testKeyIgnore;
 }

@@ -297,7 +297,8 @@ public final class Stringz {
      * String variables of the provided class with values from the retrieved
      * resource bundle using the variable's name as look up key. If the bundle
      * does not contain a value for a variable, a
-     * {@link java.util.MissingResourceException} will be thrown.
+     * {@link java.util.MissingResourceException} will be thrown (except if that field
+     * is marked as {@link NoResource}).
      * 
      * <p>
      * If the provided <tt>ResourceMapping</tt> annotation does <b>not</b>
@@ -381,7 +382,8 @@ public final class Stringz {
             .filter(field -> Modifier.isStatic(field.getModifiers()) &&
                 Modifier.isPublic(field.getModifiers()) &&
                 !Modifier.isFinal(field.getModifiers()) &&
-                field.getType() == String.class)
+                field.getType() == String.class &&
+                !field.isAnnotationPresent(NoResource.class))
             .forEach(field -> {
                 field.setAccessible(true);
                 String value = bundle.getString(field.getName());
