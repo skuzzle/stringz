@@ -12,9 +12,9 @@ import java.util.ResourceBundle;
 import java.util.ResourceBundle.Control;
 
 // Class adapted from: http://stackoverflow.com/a/4660195/2489557
-class CharsetBundleControl extends Control {
+public class CharsetBundleControl extends Control {
 
-    private final Charset charset;
+    protected final Charset charset;
 
     public CharsetBundleControl(String charset) {
         if (charset == null) {
@@ -31,9 +31,9 @@ class CharsetBundleControl extends Control {
     }
 
     @Override
-    public ResourceBundle newBundle(String baseName, Locale locale, String format,
-            ClassLoader loader, boolean reload)
-            throws IllegalAccessException, InstantiationException, IOException {
+    public ResourceBundle newBundle(String baseName, Locale locale, String format, 
+            ClassLoader loader, boolean reload) 
+                    throws IllegalAccessException, InstantiationException, IOException {
         // The below is a copy of the default implementation.
         final String bundleName = toBundleName(baseName, locale);
         final String resourceName = toResourceName(bundleName, "properties"); //$NON-NLS-1$
@@ -53,8 +53,6 @@ class CharsetBundleControl extends Control {
         }
         if (stream != null) {
             try {
-                // Only this line is changed to make it to read properties files
-                // as UTF-8.
                 bundle = new PropertyResourceBundle(
                         new InputStreamReader(stream, this.charset)); //$NON-NLS-1$
             } finally {

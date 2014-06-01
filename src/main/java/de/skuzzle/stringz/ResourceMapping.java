@@ -86,7 +86,7 @@ public @interface ResourceMapping {
      * custom family lookup is applied by the {@link Stringz} class.
      * 
      * @return The base name for {@link java.util.ResourceBundle} lookup or the empty
-     *          String.
+     *          String. Defaults to the empty String.
      */
     public String value() default "";
 
