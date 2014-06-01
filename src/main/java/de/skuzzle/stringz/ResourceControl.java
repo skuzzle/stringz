@@ -20,7 +20,7 @@ import java.lang.annotation.Target;
 public @interface ResourceControl {
     /**
      * Specifies the {@link ControlConfigurator} which will be used to create a 
-     * {@link java.util.ResourceBundle.Control Control instance. That instance will then
+     * {@link java.util.ResourceBundle.Control Control} instance. That instance will then
      * be used to locate and read a ResourceBundle for this class.
      * @return The class of the ControlConfigurator to use.
      */

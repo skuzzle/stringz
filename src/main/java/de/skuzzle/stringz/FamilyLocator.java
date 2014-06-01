@@ -6,18 +6,20 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Can be used to apply a custom bundle family lookup for a single {@link Messages} 
- * implementation. You have to implement the family lookup strategy using 
+ * Can be used to apply a custom bundle family lookup for a single message class.
+ * You have to implement the family lookup strategy using 
  * {@link BundleFamilyLocator} and supply an instance of that class to 
  * {@link Stringz#registerLocator(BundleFamilyLocator)}. Using this annotation, you
  * can instruct stringz to use your new custom locator when initializing a 
  * <tt>Messages</tt> instance:
  * 
  * <pre>
+ * &#64;ResourceMapping
  * &#64;FamilyLocator(MyCustomFamilyLocator.class)
- * public class MSG implements Messages {
+ * public class MSG {
  *     //...
  * }
+ * </pre>
  * @author Simon Taddiken
  */
 @Retention(RetentionPolicy.RUNTIME)

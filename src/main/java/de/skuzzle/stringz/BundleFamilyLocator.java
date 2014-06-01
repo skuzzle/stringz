@@ -13,10 +13,10 @@ package de.skuzzle.stringz;
 public interface BundleFamilyLocator {
 
     /**
-     * Given a class which implements {@link Messages}, this method returns the
-     * resource family to use for locating the resource which belongs to that 
+     * Given a message class which is marked as {@link ResourceMapping}, this method 
+     * returns the resource family to use for locating the resource which belongs to that 
      * implementation.
-     * @param messages The {@link Messages} implementation to find the family for.
+     * @param messages The message class implementation to find the family for.
      * @return The name of the resource bundle family for that class.
      */
     public String locateBundleFamily(Class<?> messages);

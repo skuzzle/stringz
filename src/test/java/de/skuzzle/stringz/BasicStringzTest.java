@@ -32,7 +32,7 @@ public class BasicStringzTest {
         Assert.assertEquals("Some value reference at the beginning", MSG.testKey4);
         Assert.assertEquals("reference at the end Some value", MSG.testKey5);
         
-        Stringz.setLocale(Locale.GERMAN);
+        Stringz.setLocale(Locale.GERMANY);
         
         Assert.assertEquals("Ein Wert", MSG.testKey1);
         Assert.assertEquals("Ein String mit einer Referenz zu 'Ein Wert'", MSG.testKey2);

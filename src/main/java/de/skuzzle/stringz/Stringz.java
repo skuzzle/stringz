@@ -77,7 +77,7 @@ import java.util.Set;
  * 
  * <p>If this behavior does not suit your needs, there are several ways of customizing
  * the base name used for a message class. First, there are two ways two explicitly
- * specify a base name:
+ * specify a base name:</p>
  * <ol>
  *   <li>Define the field <tt>public final static String BUNDLE_FAMILY</tt> in your 
  *       message class. Then, the value of that field will be used as base name.
@@ -87,7 +87,7 @@ import java.util.Set;
  *       <tt>&#64;ResourceMapping("com.your.domain.BaseName")</tt>)
  *   </li>
  * </ol>
- * Furthermore, you may {@link #registerLocator(BundleFamilyLocator) register} a 
+ * <p>Furthermore, you may {@link #registerLocator(BundleFamilyLocator) register} a 
  * {@link BundleFamilyLocator} locator with the <tt>Stringz</tt> class and specify the 
  * locator to use on your message class using the {@link FamilyLocator} annotation. Here 
  * is a sample <tt>BundleFamilyLocator</tt>:</p>
@@ -95,7 +95,7 @@ import java.util.Set;
  * <pre>
  * public class StaticFamilyLocator implements BundleFamilyLocator {
  *     &#64;Override
- *     public String locateBundleFamily(Class<?> msg) {
+ *     public String locateBundleFamily(Class&lt;?&gt; msg) {
  *         return "com.your.domain.SomeBaseName";
  *     }
  * }
@@ -302,7 +302,7 @@ public final class Stringz {
      * provide a base name for finding the bundle (i.e.
      * {@link ResourceMapping#value()} returns the empty String), a default
      * procedure is started in order to locate the bundle which belongs to the
-     * provided class:
+     * provided class:</p>
      * <ol>
      * <li>If the provided class is annotated with {@link BundleFamilyLocator}
      * then the provided locator is used to find the base name for the bundle.</li>
@@ -315,7 +315,7 @@ public final class Stringz {
      * name as the class is named.</li>
      * </ol>
      * 
-     * If the {@link ResourceMapping#value() ResourceMapping} specifies any
+     * <p>If the {@link ResourceMapping#value() ResourceMapping} specifies any
      * other String than the empty String, that String is used as base name for
      * resource bundle location. If the ResourceBundle could not be resolved
      * using the base name, a {@link java.util.MissingResourceException} is
