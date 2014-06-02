@@ -16,11 +16,10 @@ public class ExtendedBundleTest {
 
     private ResourceBundle getBundle(String name) {
         final ClassLoader loader = getClass().getClassLoader();
-        final Locale locale = Locale.getDefault();
+        final Locale locale = Locale.ROOT;
         final Control control = new CharsetBundleControl("UTF-8");
         return ExtendedBundle.getBundle("de.skuzzle.stringz." + name, locale,
-                loader,
-                control);
+                loader, control);
     }
 
     private ResourceBundle getBundleWithIncludes() {
