@@ -11,6 +11,10 @@ import java.util.ResourceBundle;
 import java.util.ResourceBundle.Control;
 import java.util.Set;
 
+import de.skuzzle.stringz.annotation.FamilyLocator;
+import de.skuzzle.stringz.annotation.ResourceControl;
+import de.skuzzle.stringz.annotation.ResourceMapping;
+
 /**
  * Provides automatic mapping from {@link ResourceBundle ResourceBundles} to
  * public variables of a class based on their names. Those classes are called

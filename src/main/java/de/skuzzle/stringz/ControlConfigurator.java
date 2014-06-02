@@ -2,6 +2,8 @@ package de.skuzzle.stringz;
 
 import java.util.ResourceBundle.Control;
 
+import de.skuzzle.stringz.annotation.ResourceMapping;
+
 /**
  * Factory interface for {@link java.util.ResourceBundle.Control Control} instances.
  * Implementations of this interface are required to have a no arguments default 

@@ -1,4 +1,4 @@
-package de.skuzzle.stringz;
+package de.skuzzle.stringz.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;

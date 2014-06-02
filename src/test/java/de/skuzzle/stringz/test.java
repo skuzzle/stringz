@@ -1,5 +1,7 @@
 package de.skuzzle.stringz;
 
+import de.skuzzle.stringz.annotation.ResourceMapping;
+
 // name as test.properties in same package
 @ResourceMapping
 public class test {

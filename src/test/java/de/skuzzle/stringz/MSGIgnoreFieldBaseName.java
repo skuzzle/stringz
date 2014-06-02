@@ -1,5 +1,7 @@
 package de.skuzzle.stringz;
 
+import de.skuzzle.stringz.annotation.ResourceMapping;
+
 @ResourceMapping("de.skuzzle.stringz.test")
 public class MSGIgnoreFieldBaseName {
     

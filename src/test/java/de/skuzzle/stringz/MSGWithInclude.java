@@ -1,5 +1,7 @@
 package de.skuzzle.stringz;
 
+import de.skuzzle.stringz.annotation.ResourceMapping;
+
 @ResourceMapping("de.skuzzle.stringz.testWithInclude1")
 public class MSGWithInclude {
 

@@ -4,6 +4,8 @@ import java.lang.reflect.Field;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import de.skuzzle.stringz.annotation.ResourceMapping;
+
 /**
  * A <tt>FieldMapper</tt> can be used to customize the way in which fields of a class
  * are mapped to values from a {@link ResourceBundle}. The {@link #accept(Field)} method

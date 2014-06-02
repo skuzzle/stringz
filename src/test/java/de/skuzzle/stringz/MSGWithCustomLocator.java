@@ -1,5 +1,8 @@
 package de.skuzzle.stringz;
 
+import de.skuzzle.stringz.annotation.FamilyLocator;
+import de.skuzzle.stringz.annotation.ResourceMapping;
+
 @ResourceMapping
 @FamilyLocator(StaticFamilyLocator.class)
 public class MSGWithCustomLocator {

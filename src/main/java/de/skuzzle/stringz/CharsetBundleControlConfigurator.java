@@ -4,6 +4,8 @@ import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.ResourceBundle.Control;
 
+import de.skuzzle.stringz.annotation.ResourceMapping;
+
 /**
  * ControlConfigurator which creates a {@link CharsetBundleControl} using the charset 
  * provided with {@link ResourceMapping#encoding()}.

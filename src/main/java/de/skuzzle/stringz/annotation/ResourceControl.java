@@ -1,9 +1,11 @@
-package de.skuzzle.stringz;
+package de.skuzzle.stringz.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import de.skuzzle.stringz.ControlConfigurator;
 
 /**
  * This annotation can be used to apply a custom {@link java.util.ResourceBundle} look up

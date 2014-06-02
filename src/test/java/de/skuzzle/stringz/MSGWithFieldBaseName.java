@@ -1,5 +1,7 @@
 package de.skuzzle.stringz;
 
+import de.skuzzle.stringz.annotation.ResourceMapping;
+
 @ResourceMapping
 public class MSGWithFieldBaseName {
     public final static String BUNDLE_FAMILY = "de.skuzzle.stringz.test";
