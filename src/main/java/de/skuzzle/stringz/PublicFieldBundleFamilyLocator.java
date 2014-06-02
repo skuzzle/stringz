@@ -5,8 +5,8 @@ import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.Optional;
 
-import de.skuzzle.stringz.annotation.BundleFamilyLocatorException;
 import de.skuzzle.stringz.strategy.BundleFamilyLocator;
+import de.skuzzle.stringz.strategy.BundleFamilyLocatorException;
 
 public class PublicFieldBundleFamilyLocator implements BundleFamilyLocator {
 

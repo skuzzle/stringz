@@ -1,4 +1,4 @@
-package de.skuzzle.stringz.annotation;
+package de.skuzzle.stringz.strategy;
 
 import de.skuzzle.stringz.StringzRuntimeException;
 

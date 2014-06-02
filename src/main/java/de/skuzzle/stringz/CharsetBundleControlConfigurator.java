@@ -4,8 +4,8 @@ import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.ResourceBundle.Control;
 
-import de.skuzzle.stringz.annotation.ControlConfigurationException;
 import de.skuzzle.stringz.annotation.ResourceMapping;
+import de.skuzzle.stringz.strategy.ControlConfigurationException;
 import de.skuzzle.stringz.strategy.ControlConfigurator;
 
 /**

@@ -4,8 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.skuzzle.stringz.annotation.BundleFamilyLocatorException;
 import de.skuzzle.stringz.strategy.BundleFamilyLocator;
+import de.skuzzle.stringz.strategy.BundleFamilyLocatorException;
 
 public class PublicFieldBundleFamilyLocatorTest {
 

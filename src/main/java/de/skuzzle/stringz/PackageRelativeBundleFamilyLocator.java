@@ -1,7 +1,7 @@
 package de.skuzzle.stringz;
 
-import de.skuzzle.stringz.annotation.BundleFamilyLocatorException;
 import de.skuzzle.stringz.strategy.BundleFamilyLocator;
+import de.skuzzle.stringz.strategy.BundleFamilyLocatorException;
 
 
 public class PackageRelativeBundleFamilyLocator implements BundleFamilyLocator {
