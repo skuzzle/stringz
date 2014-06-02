@@ -6,7 +6,7 @@ package de.skuzzle.stringz;
  * 
  * @author Simon Taddiken
  */
-public class ControlConfigurationException extends RuntimeException {
+public class ControlConfigurationException extends StringzRuntimeException {
 
     private static final long serialVersionUID = 1L;
 

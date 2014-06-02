@@ -1,6 +1,6 @@
 package de.skuzzle.stringz;
 
-public class BundleFamilyLocatorException extends RuntimeException {
+public class BundleFamilyLocatorException extends StringzRuntimeException {
 
     private static final long serialVersionUID = 1L;
 

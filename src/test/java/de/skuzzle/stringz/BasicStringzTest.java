@@ -11,8 +11,8 @@ public class BasicStringzTest {
 
     @Before
     public void setup() {
-        Locale.setDefault(Locale.ENGLISH);
-        Stringz.setLocale(Locale.ENGLISH);
+        Locale.setDefault(Locale.ROOT);
+        Stringz.setLocale(Locale.ROOT);
     }
     
     @Test

@@ -1,6 +1,5 @@
 package de.skuzzle.stringz;
 
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -268,9 +267,6 @@ public final class Stringz {
      */
     public static void setLocale(Locale locale) {
         locale = locale == null ? Locale.getDefault() : locale;
-        // TODO: remove debug print
-        System.err.println(String.format("Switched locale from %s to %s", 
-                Stringz.locale, locale));
         final boolean eq = locale.equals(Stringz.locale);
         Stringz.locale = locale;
         if (!eq) {
@@ -377,27 +373,11 @@ public final class Stringz {
         final ResourceBundle bundle = ExtendedBundle.getBundle(baseName,
                 locale, cls.getClassLoader(), control);
 
+        final FieldMapper fieldMapper = new DefaultFieldMapper();
         // Map fields to bundle entries
         Arrays.stream(cls.getFields())
-            .filter(field -> Modifier.isStatic(field.getModifiers()) &&
-                Modifier.isPublic(field.getModifiers()) &&
-                !Modifier.isFinal(field.getModifiers()) &&
-                field.getType() == String.class &&
-                !field.isAnnotationPresent(NoResource.class))
-            .forEach(field -> {
-                field.setAccessible(true);
-                String value = bundle.getString(field.getName());
-                if (rm.intern()) {
-                    value = value.intern();
-                }
-                try {
-                    field.set(null, value);
-                } catch (IllegalAccessException e) {
-                    throw new RuntimeException(String.format(
-                        "Resource initialization failed. family=%s, field=%s, value=%s",
-                        baseName, field.getName(), value), e);
-                }
-            });
+            .filter(fieldMapper::accept)
+            .forEach(field -> fieldMapper.mapField(rm, field, bundle));
     }
 
     /**
