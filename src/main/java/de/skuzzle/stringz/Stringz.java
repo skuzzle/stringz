@@ -329,23 +329,23 @@ public final class Stringz {
      * @param cls The class to initialize.
      * @param locale The locale used to locate the proper resource bundle.
      * @throws IllegalArgumentException If either parameter is <code>null</code>
-     *             or if the provided class is not annotated with
-     *             {@link ResourceMapping}.
+     *             or if the provided class is not annotated with {@link ResourceMapping}.
      * @throws java.util.MissingResourceException If either the
      *             {@link ResourceBundle} can not be found or the provided class
      *             contains a public static String variable for which no mapping
      *             exists in the ResourceBundle.
      * @throws BundleFamilyLocatorException If the class is annotated with
-     *             {@link FamilyLocator} and the specified
-     *             {@link BundleFamilyLocator} is not
-     *             {@link #registerLocator(BundleFamilyLocator) registered}. Or
-     *             if the used {@link BundleFamilyLocator} fails to locate the
-     *             bundle family.
+     *             <tt>&#64;FamilyLocator</tt> and the specified 
+     *             <tt>BundleFamilyLocator</tt> is not
+     *             {@link #registerLocator(BundleFamilyLocator) registered}. Or if the 
+     *             used <tt>BundleFamilyLocator</tt> fails to locate the bundle family.
      * @throws ControlConfigurationException If the class is annotated with 
-     *             {@link ResourceControl} and the provided {@link ControlConfigurator}
-     *             class could not be instantiated or if its 
+     *             <tt>&#64;ResourceControl</tt> and the provided 
+     *             <tt>ControlConfigurator</tt> class could not be instantiated or if its 
      *             {@link ControlConfigurator#configure(ResourceMapping, String[]) configure} 
      *             method failed to create a <tt>Control</tt> instance.
+     * @throws FieldMappingException If the used {@link FieldMapper} failed to assign a 
+     *             value to a field.             
      */
     public static void init(Class<?> cls, Locale locale) {
         if (cls == null) {

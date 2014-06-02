@@ -4,6 +4,14 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ResourceBundle;
 
+/**
+ * This is the default field mapping strategy for Stringz. See description of 
+ * {@link #accept(Field) accept} and 
+ * {@link #mapField(ResourceMapping, Field, ResourceBundle) mapField} to learn how values
+ * are assigned to which fields.
+ * 
+ * @author Simon Taddiken
+ */
 public class DefaultFieldMapper implements FieldMapper {
 
     /**
@@ -27,10 +35,32 @@ public class DefaultFieldMapper implements FieldMapper {
                 !field.isAnnotationPresent(NoResource.class);
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * <p>Implements the default field assignment strategy for <tt>Stringz</tt>. If the
+     * passed field is annotated with {@link ResourceKey}, the annotation's value is
+     * used as key to reference the resource value. Otherwise, the field's name will be
+     * used as key. The value for the field will be retrieved using 
+     * {@link ResourceBundle#getString(String)}. If the passed ResourceMapping's 
+     * <tt>intern</tt> attribute is <code>true</code>, {@link String#intern()} will be 
+     * called before assigning the value to the field.</p>
+     * 
+     * @throws java.util.MissingResourceException {@inheritDoc}
+     * @throws FieldMappingException If the {@link Field#set(Object, Object)} method fails
+     *          with an {@link IllegalAccessException}.
+     */
     @Override
     public void mapField(ResourceMapping mapping, Field field, ResourceBundle bundle) {
         field.setAccessible(true);
-        String value = bundle.getString(field.getName());
+        final String resourceKey;
+        if (field.isAnnotationPresent(ResourceKey.class)) {
+            final ResourceKey rk = field.getAnnotation(ResourceKey.class);
+            resourceKey = rk.value();
+        } else {
+            resourceKey = field.getName();
+        }
+        String value = bundle.getString(resourceKey);
         if (mapping.intern()) {
             value = value.intern();
         }
