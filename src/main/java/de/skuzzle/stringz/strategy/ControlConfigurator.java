@@ -2,6 +2,8 @@ package de.skuzzle.stringz.strategy;
 
 import java.util.ResourceBundle.Control;
 
+import de.skuzzle.stringz.Stringz;
+import de.skuzzle.stringz.annotation.ResourceControl;
 import de.skuzzle.stringz.annotation.ResourceMapping;
 
 /**

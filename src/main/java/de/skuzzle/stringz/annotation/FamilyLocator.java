@@ -12,8 +12,8 @@ import de.skuzzle.stringz.strategy.BundleFamilyLocator;
  * Can be used to apply a custom bundle family lookup for a single message class.
  * You have to implement the family lookup strategy using 
  * {@link BundleFamilyLocator} and supply an instance of that class to 
- * {@link Stringz#registerLocator(BundleFamilyLocator)}. Using this annotation, you
- * can instruct stringz to use your new custom locator when initializing a 
+ * {@link de.skuzzle.stringz.Stringz#registerLocator(BundleFamilyLocator)}. Using this 
+ * annotation, you can instruct stringz to use your new custom locator when initializing a 
  * <tt>Messages</tt> instance:
  * 
  * <pre>
@@ -32,7 +32,7 @@ public @interface FamilyLocator {
      * Defines the {@link BundleFamilyLocator} class to use when locating the bundle 
      * family for a <tt>ResourceMapping</tt> class. A concrete implementation of the class
      * specified as value has to be registered with 
-     * {@link Stringz#registerLocator(BundleFamilyLocator)}.
+     * {@link de.skuzzle.stringz.Stringz#registerLocator(BundleFamilyLocator)}.
      * 
      * @return The class of the {@link BundleFamilyLocator} to use with this class.
      */

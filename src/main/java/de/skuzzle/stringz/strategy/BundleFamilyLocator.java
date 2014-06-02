@@ -1,5 +1,8 @@
 package de.skuzzle.stringz.strategy;
 
+import de.skuzzle.stringz.Stringz;
+import de.skuzzle.stringz.annotation.ResourceMapping;
+
 /**
  * Strategy interface for finding the bundle family to use with a certain 
  * {@link ResourceMapping}. 
@@ -11,7 +14,7 @@ package de.skuzzle.stringz.strategy;
  * @author Simon Taddiken
  */
 public interface BundleFamilyLocator {
-
+    
     /**
      * Given a message class which is marked as {@link ResourceMapping}, this method 
      * returns the resource family to use for locating the resource which belongs to that 

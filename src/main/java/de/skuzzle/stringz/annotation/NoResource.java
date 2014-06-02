@@ -10,7 +10,7 @@ import java.lang.annotation.Retention;
  * message class which should not be mapped to a resource.
  * 
  * @author Simon Taddiken
- * @see Stringz
+ * @see de.skuzzle.stringz.Stringz
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)

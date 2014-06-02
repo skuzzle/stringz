@@ -11,14 +11,14 @@ import java.lang.annotation.Target;
  * annotation is not present on a field, its name is used as key.
  *  
  * @author Simon Taddiken
- * @see DefaultFieldMapper
+ * @see de.skuzzle.stringz.DefaultFieldMapper
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface ResourceKey {
     /**
      * Specifies the key which references the value within a 
-     * {@link java.util.ResourceBundle} taht should be assigned to the annotated field.
+     * {@link java.util.ResourceBundle} that should be assigned to the annotated field.
      * @return The resource key to use.
      */
     public String value();

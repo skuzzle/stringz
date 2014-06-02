@@ -1,10 +1,10 @@
 package de.skuzzle.stringz;
 
 /**
- * Superclass for all Exceptions which can be thrown bz the strategz interfaces of the
+ * Superclass for all Exceptions which can be thrown by the strategy interfaces of the
  * Stringy framework.
  * 
- *  * @author Simon Taddiken
+ * @author Simon Taddiken
  */
 public class StringzRuntimeException extends RuntimeException {
 

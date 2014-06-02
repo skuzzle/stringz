@@ -12,6 +12,8 @@ import java.util.ResourceBundle.Control;
 import java.util.Set;
 
 import de.skuzzle.stringz.annotation.FamilyLocator;
+import de.skuzzle.stringz.annotation.FieldMapping;
+import de.skuzzle.stringz.annotation.NoResource;
 import de.skuzzle.stringz.annotation.ResourceControl;
 import de.skuzzle.stringz.annotation.ResourceMapping;
 import de.skuzzle.stringz.strategy.BundleFamilyLocator;
@@ -19,6 +21,8 @@ import de.skuzzle.stringz.strategy.BundleFamilyLocatorException;
 import de.skuzzle.stringz.strategy.ControlConfigurationException;
 import de.skuzzle.stringz.strategy.ControlConfigurator;
 import de.skuzzle.stringz.strategy.FieldMapper;
+import de.skuzzle.stringz.strategy.FieldMappingException;
+import de.skuzzle.stringz.strategy.Strategies;
 
 /**
  * Provides automatic mapping from {@link ResourceBundle ResourceBundles} to
@@ -213,6 +217,9 @@ public final class Stringz {
     /** The default locale to use */
     private static volatile Locale locale = Locale.getDefault();
 
+    /** Currently used strategies */
+    private static volatile Strategies strategies;
+    
     /**
      * Registered locators to find the bundle family name for a Messages
      * implementation
@@ -220,10 +227,21 @@ public final class Stringz {
     private final static Map<Class<? extends BundleFamilyLocator>, BundleFamilyLocator> 
         FAMILY_LOCATORS = new HashMap<>();
 
-    /** Stores Control instances which can be referenced by a name */
-    private final static Map<Class<? extends ControlConfigurator>, ControlConfigurator> 
-        CONTROLS = new HashMap<>();
+    /** Holds all classes which have already been initialized */
+    private final static Set<Class<?>> initialized = new HashSet<>();
+    
+    /** 
+     * The default FieldMapper for classes which have ne {@link FieldMapping} annotation
+     */
+    private final static FieldMapper DEFAULT_FIELD_MAPPER = new DefaultFieldMapper();
 
+    /**
+     * The default Strategy.
+     */
+    private final static Strategies DEFAULT_STRATEGIES = new CachedStrategies();
+    
+    
+    
     /**
      * Registers the provided {@link BundleFamilyLocator}. The provided instance
      * will be registered under the class which is returned by its
@@ -287,12 +305,21 @@ public final class Stringz {
             }
         }
     }
+    
+    /**
+     * Sets the {@link Strategies} to use.
+     * @param strategies The strategies to use. If <code>null</code>, a default 
+     *          implementation will be used.
+     */
+    public static void setStrategies(Strategies strategies) {
+        synchronized (DEFAULT_STRATEGIES) {
+            strategies = strategies == null ? DEFAULT_STRATEGIES : strategies;
+            Stringz.strategies = strategies;
+        }
+    }
 
     /** Not instantiatable (is this even a word?) */
     private Stringz() {}
-
-    /** Holds all classes which have already been initialized */
-    private final static Set<Class<?>> initialized = new HashSet<>();
 
     /**
      * Initializes the provided <em>message class</em> using the provided
@@ -382,7 +409,7 @@ public final class Stringz {
         final ResourceBundle bundle = ExtendedBundle.getBundle(baseName,
                 locale, cls.getClassLoader(), control);
 
-        final FieldMapper fieldMapper = new DefaultFieldMapper();
+        final FieldMapper fieldMapper = findFieldMapper(cls, rm);
         // Map fields to bundle entries
         Arrays.stream(cls.getFields())
             .filter(fieldMapper::accept)
@@ -437,26 +464,18 @@ public final class Stringz {
     private static Control findControl(Class<?> cls, ResourceMapping mapping) {
         if (cls.isAnnotationPresent(ResourceControl.class)) {
             final ResourceControl rc = cls.getAnnotation(ResourceControl.class);
-            return configureControl(rc, mapping);
+            return strategies.configureControl(rc, mapping);
         } else {
             return new CharsetBundleControl(mapping.encoding());
         }
     }
-
-    private static Control configureControl(ResourceControl rc, ResourceMapping mapping) {
-        synchronized (CONTROLS) {
-            ControlConfigurator control = CONTROLS.get(rc.value());
-            if (control == null) {
-                try {
-                    control = rc.value().newInstance();
-                    CONTROLS.put(rc.value(), control);
-                } catch (InstantiationException | IllegalAccessException e) {
-                    throw new ControlConfigurationException(String.format(
-                        "Could not create ControlConfigurator for class %s",rc.value()), 
-                        e);
-                }
-            }
-            return control.configure(mapping, rc.args());
+    
+    private static FieldMapper findFieldMapper(Class<?> cls, ResourceMapping mapping) {
+        if (cls.isAnnotationPresent(FieldMapping.class)) {
+            final FieldMapping fm = cls.getAnnotation(FieldMapping.class);
+            return strategies.configureFieldMapper(fm, mapping);
+        } else {
+            return DEFAULT_FIELD_MAPPER;
         }
     }
 }

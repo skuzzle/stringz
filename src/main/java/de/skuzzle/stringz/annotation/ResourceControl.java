@@ -24,7 +24,7 @@ public @interface ResourceControl {
      * Specifies the {@link ControlConfigurator} which will be used to create a 
      * {@link java.util.ResourceBundle.Control Control} instance. That instance will then
      * be used to locate and read a ResourceBundle for this class.
-     * @return The class of the ControlConfigurator to use.
+     * @return The class of the <tt>ControlConfigurator</tt> to use.
      */
     Class<? extends ControlConfigurator> value();
     
@@ -32,7 +32,7 @@ public @interface ResourceControl {
      * Defines optional arguments to be passed to 
      * {@link ControlConfigurator#configure(ResourceMapping, String[])}. Defaults to an
      * empty array.
-     * @return Array of additional parameters for the ControlConfigurator.
+     * @return Array of additional parameters for the <tt>ControlConfigurator</tt>
      */
     String[] args() default {};
 }
