@@ -5,8 +5,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import de.skuzzle.stringz.BundleFamilyLocator;
 import de.skuzzle.stringz.PublicFieldBundleFamilyLocator;
+import de.skuzzle.stringz.strategy.BundleFamilyLocator;
 
 /**
  * Can be used to apply a custom bundle family lookup for a single message class.

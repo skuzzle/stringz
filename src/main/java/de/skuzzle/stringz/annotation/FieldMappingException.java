@@ -1,4 +1,4 @@
-package de.skuzzle.stringz;
+package de.skuzzle.stringz.annotation;
 
 public class FieldMappingException extends RuntimeException {
 

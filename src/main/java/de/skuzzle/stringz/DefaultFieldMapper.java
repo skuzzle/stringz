@@ -4,9 +4,11 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ResourceBundle;
 
+import de.skuzzle.stringz.annotation.FieldMappingException;
 import de.skuzzle.stringz.annotation.NoResource;
 import de.skuzzle.stringz.annotation.ResourceKey;
 import de.skuzzle.stringz.annotation.ResourceMapping;
+import de.skuzzle.stringz.strategy.FieldMapper;
 
 /**
  * This is the default field mapping strategy for Stringz. See description of 

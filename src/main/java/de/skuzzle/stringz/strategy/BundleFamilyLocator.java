@@ -1,4 +1,4 @@
-package de.skuzzle.stringz;
+package de.skuzzle.stringz.strategy;
 
 /**
  * Strategy interface for finding the bundle family to use with a certain 

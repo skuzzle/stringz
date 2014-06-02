@@ -1,4 +1,6 @@
-package de.skuzzle.stringz;
+package de.skuzzle.stringz.annotation;
+
+import de.skuzzle.stringz.StringzRuntimeException;
 
 /**
  * This exception can be thrown by {@link ControlConfigurator} instances if
