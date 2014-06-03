@@ -12,10 +12,23 @@ import java.util.ResourceBundle;
 import java.util.ResourceBundle.Control;
 
 // Class adapted from: http://stackoverflow.com/a/4660195/2489557
+/**
+ * Simple {@link Control} instance which creates a {@link PropertyResourceBundle} that is
+ * read using a specified encoding.
+ * 
+ * @author Simon Taddiken
+ */
 public class CharsetBundleControl extends Control {
 
+    /** The charset in which the resource should be read */
     protected final Charset charset;
 
+    /**
+     * Creates a new CharsetBundleControl.
+     * 
+     * @param charset Name of the charset to use.
+     * @throws IllegalArgumentException If <tt>charset</tt> is <code>null</code>
+     */
     public CharsetBundleControl(String charset) {
         if (charset == null) {
             throw new IllegalArgumentException("charset is null");
@@ -23,6 +36,12 @@ public class CharsetBundleControl extends Control {
         this.charset = Charset.forName(charset);
     }
 
+    /**
+     * Creates a new CharsetBundleControl.
+     * 
+     * @param charset The charset to use.
+     * @throws IllegalArgumentException If <tt>charset</tt> is <code>null</code>
+     */
     public CharsetBundleControl(Charset charset) {
         if (charset == null) {
             throw new IllegalArgumentException("charset is null");

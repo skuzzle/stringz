@@ -10,6 +10,7 @@ import de.skuzzle.stringz.strategy.BundleFamilyLocatorException;
 
 public class PublicFieldBundleFamilyLocator implements BundleFamilyLocator {
 
+    /** Default name of the field which is looked up */
     protected final static String BUNDLE_FAMILY_FIELD = "BUNDLE_FAMILY";
     
     protected String getConstantName() {

@@ -4,13 +4,16 @@ import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.ResourceBundle.Control;
 
+import de.skuzzle.stringz.annotation.ResourceControl;
 import de.skuzzle.stringz.annotation.ResourceMapping;
 import de.skuzzle.stringz.strategy.ControlConfigurationException;
 import de.skuzzle.stringz.strategy.ControlConfigurator;
 
 /**
  * ControlConfigurator which creates a {@link CharsetBundleControl} using the charset 
- * provided with {@link ResourceMapping#encoding()}.
+ * provided with {@link ResourceMapping#encoding()}. This configurator does not need to 
+ * be specified on a message class using {@link ResourceControl}, because it will be used
+ * as default when no other <tt>ResourceControl</tt> is given.
  * 
  * @author Simon Taddiken
  */
