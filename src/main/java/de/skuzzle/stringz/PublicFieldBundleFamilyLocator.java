@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 import de.skuzzle.stringz.strategy.BundleFamilyLocator;
-import de.skuzzle.stringz.strategy.BundleFamilyLocatorException;
+import de.skuzzle.stringz.strategy.BundleFamilyException;
 
 public class PublicFieldBundleFamilyLocator implements BundleFamilyLocator {
 
@@ -31,14 +31,14 @@ public class PublicFieldBundleFamilyLocator implements BundleFamilyLocator {
                         field.getName().equals(constant))
                 .findFirst();
         if (!f.isPresent()) {
-            throw new BundleFamilyLocatorException(String.format(
+            throw new BundleFamilyException(String.format(
                     "Class %s has no public static field with name %s",
                     messages.getName(), constant));
         }
         try {
             return (String) f.get().get(null);
         } catch (IllegalAccessException e) {
-            throw new BundleFamilyLocatorException(
+            throw new BundleFamilyException(
                     String.format("Field %s of class %s inaccessible",
                             constant,
                             messages.getName()));

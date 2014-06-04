@@ -7,16 +7,16 @@ import java.util.ResourceBundle.Control;
 import de.skuzzle.stringz.annotation.FieldMapping;
 import de.skuzzle.stringz.annotation.ResourceControl;
 import de.skuzzle.stringz.annotation.ResourceMapping;
-import de.skuzzle.stringz.strategy.ControlConfigurationException;
-import de.skuzzle.stringz.strategy.ControlConfigurator;
+import de.skuzzle.stringz.strategy.ControlFactoryException;
+import de.skuzzle.stringz.strategy.ControlFactory;
 import de.skuzzle.stringz.strategy.FieldMapper;
-import de.skuzzle.stringz.strategy.FieldMapperConfigurator;
+import de.skuzzle.stringz.strategy.FieldMapperFactory;
 import de.skuzzle.stringz.strategy.FieldMappingException;
 import de.skuzzle.stringz.strategy.Strategies;
 
 /**
- * These strategies only instantiate every {@link ControlConfigurator} and 
- * {@link FieldMapperConfigurator} once. When a <tt>Configurator</tt> for the same class 
+ * These strategies only instantiate every {@link ControlFactory} and 
+ * {@link FieldMapperFactory} once. When a <tt>Factory</tt> for the same class 
  * is requested, the cached instance will be returned. If you require a simple, 
  * non-caching implementation, use {@link SimpleStrategies} instead.
  * 
@@ -28,11 +28,11 @@ import de.skuzzle.stringz.strategy.Strategies;
  */
 public class CachedStrategies implements Strategies {
 
-    /** Cache for {@link ControlConfigurator ControlConfigurators} */
-    protected final Map<Class<? extends ControlConfigurator>, ControlConfigurator> controlCache;
+    /** Cache for {@link ControlFactory ControlFactorys} */
+    protected final Map<Class<? extends ControlFactory>, ControlFactory> controlCache;
     
-    /** Cache for {@link FieldMapperConfigurator FieldMapperConfigurators} */
-    protected final Map<Class<? extends FieldMapperConfigurator>, FieldMapperConfigurator> fieldMapperCache;
+    /** Cache for {@link FieldMapperFactory FieldMapperFactorys} */
+    protected final Map<Class<? extends FieldMapperFactory>, FieldMapperFactory> fieldMapperCache;
 
     /**
      * Creates a new cached strategies instance.
@@ -71,25 +71,25 @@ public class CachedStrategies implements Strategies {
     }
 
     @Override
-    public Control configureControl(ResourceControl rc, ResourceMapping mapping)
-            throws ControlConfigurationException {
+    public Control getControl(ResourceControl rc, ResourceMapping mapping)
+            throws ControlFactoryException {
         try {
-            final ControlConfigurator control = getCached(this.controlCache,
+            final ControlFactory control = getCached(this.controlCache,
                     rc.value());
-            return control.configure(mapping, rc.args());
+            return control.create(mapping, rc.args());
         } catch (InstantiationException | IllegalAccessException e) {
-            throw new ControlConfigurationException(String.format(
-                    "Could not create ControlConfigurator for class %s", rc.value()), e);
+            throw new ControlFactoryException(String.format(
+                    "Could not create ControlFactory for class %s", rc.value()), e);
         }
     }
 
     @Override
-    public FieldMapper configureFieldMapper(FieldMapping fm, ResourceMapping mapping)
+    public FieldMapper getFieldMapper(FieldMapping fm, ResourceMapping mapping)
             throws FieldMappingException {
         try {
-            final FieldMapperConfigurator control = getCached(this.fieldMapperCache,
+            final FieldMapperFactory control = getCached(this.fieldMapperCache,
                     fm.value());
-            return control.configure(mapping, fm.args());
+            return control.create(mapping, fm.args());
         } catch (InstantiationException | IllegalAccessException e) {
             throw new FieldMappingException(String.format(
                     "Could not create FieldMapper for class %s", fm.value()), e);

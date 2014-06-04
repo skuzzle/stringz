@@ -2,13 +2,13 @@ package de.skuzzle.stringz.extstring;
 
 import de.skuzzle.stringz.annotation.ResourceMapping;
 import de.skuzzle.stringz.strategy.FieldMapper;
-import de.skuzzle.stringz.strategy.FieldMapperConfigurator;
+import de.skuzzle.stringz.strategy.FieldMapperFactory;
 import de.skuzzle.stringz.strategy.FieldMappingException;
 
-public class ExtStringFieldMapperConfigurator implements FieldMapperConfigurator {
+public class ExtStringFieldMapperFactory implements FieldMapperFactory {
 
     @Override
-    public FieldMapper configure(ResourceMapping mapping, String[] args)
+    public FieldMapper create(ResourceMapping mapping, String[] args)
             throws FieldMappingException {
         
         if (args.length != 0) {

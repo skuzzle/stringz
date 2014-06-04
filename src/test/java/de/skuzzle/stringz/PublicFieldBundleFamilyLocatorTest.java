@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.skuzzle.stringz.strategy.BundleFamilyLocator;
-import de.skuzzle.stringz.strategy.BundleFamilyLocatorException;
+import de.skuzzle.stringz.strategy.BundleFamilyException;
 
 public class PublicFieldBundleFamilyLocatorTest {
 
@@ -22,7 +22,7 @@ public class PublicFieldBundleFamilyLocatorTest {
         Assert.assertEquals("de.skuzzle.stringz.test", baseName);
     }
     
-    @Test(expected = BundleFamilyLocatorException.class)
+    @Test(expected = BundleFamilyException.class)
     public void testBasenameLookUpFaile() {
         final String baseName = subject.locateBundleFamily(MSG.class);
         Assert.assertEquals("de.skuzzle.stringz.test", baseName);

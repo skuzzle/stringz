@@ -37,6 +37,11 @@ public class ExtString {
     }
     
     @Override
+    public String toString() {
+        return this.s;
+    }
+    
+    @Override
     public int hashCode() {
         return this.s.hashCode();
     }

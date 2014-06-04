@@ -25,6 +25,15 @@ public class BasicStringzTest {
     }
     
     @Test
+    public void testExtString() {
+        Assert.assertEquals("Some value", MsgExtString.testKey1.s);
+        Assert.assertEquals("A String with a Reference to 'Some value'", MsgExtString.testKey2.s);
+        Assert.assertEquals("This is a String with reference to A String with a Reference to 'Some value'", MsgExtString.testKey3.s);
+        Assert.assertEquals("Some value reference at the beginning", MsgExtString.testKey4.s);
+        Assert.assertEquals("reference at the end Some value", MsgExtString.testKey5.s);
+    }
+    
+    @Test
     public void testMsgWithFieldBaseName() {
         Assert.assertEquals("Some value", MSGWithFieldBaseName.testKey1);
         Assert.assertEquals("A String with a Reference to 'Some value'", MSGWithFieldBaseName.testKey2);

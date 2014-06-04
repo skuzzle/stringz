@@ -14,14 +14,14 @@ import de.skuzzle.stringz.annotation.ResourceMapping;
  * <p>On a class marked with {@link ResourceMapping} you can additionally specify the
  * {@link FieldMapper} which serves for chosing which fields of the annotated class
  * get mapped to what value from a {@link ResourceBundle}. You can specify the 
- * {@link FieldMapperConfigurator} class using the {@link FieldMapping} annotation.
+ * {@link FieldMapperFactory} class using the {@link FieldMapping} annotation.
  * {@link Stringz} will then try to instantiate the provided class and call its 
- * {@link #configure(ResourceMapping, String[])} method in order to retrieve a 
+ * {@link #create(ResourceMapping, String[])} method in order to retrieve a 
  * {@link FieldMapper} instance.</p>
  * 
  * @author Simon Taddiken
  */
-public interface FieldMapperConfigurator {
+public interface FieldMapperFactory {
 
     /**
      * Creates a {@link FieldMapper} instance which will be used to map fields of a class
@@ -32,6 +32,6 @@ public interface FieldMapperConfigurator {
      * @return The FieldMapper instance for this message class.
      * @throws FieldMappingException If invalid <tt>args</tt> have been provided.
      */
-    public FieldMapper configure(ResourceMapping mapping, String[] args) 
+    public FieldMapper create(ResourceMapping mapping, String[] args) 
             throws FieldMappingException;
 }

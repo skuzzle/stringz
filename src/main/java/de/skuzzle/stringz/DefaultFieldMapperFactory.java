@@ -2,7 +2,7 @@ package de.skuzzle.stringz;
 
 import de.skuzzle.stringz.annotation.ResourceMapping;
 import de.skuzzle.stringz.strategy.FieldMapper;
-import de.skuzzle.stringz.strategy.FieldMapperConfigurator;
+import de.skuzzle.stringz.strategy.FieldMapperFactory;
 import de.skuzzle.stringz.strategy.FieldMappingException;
 
 /**
@@ -10,7 +10,7 @@ import de.skuzzle.stringz.strategy.FieldMappingException;
  * 
  * @author Simon Taddiken
  */
-public class DefaultFieldMapperConfigurator implements FieldMapperConfigurator {
+public class DefaultFieldMapperFactory implements FieldMapperFactory {
 
     /**
      * {@inheritDoc}
@@ -19,11 +19,11 @@ public class DefaultFieldMapperConfigurator implements FieldMapperConfigurator {
      * @throws FieldMappingException If the <tt>args</tt> array is not empty.
      */
     @Override
-    public FieldMapper configure(ResourceMapping mapping, String[] args)
+    public FieldMapper create(ResourceMapping mapping, String[] args)
             throws FieldMappingException {
         if (args.length != 0) {
             throw new FieldMappingException(
-                    String.format("This configurator has no arguments"));
+                    String.format("This factory has no arguments"));
         }
         return new DefaultFieldMapper();
     }

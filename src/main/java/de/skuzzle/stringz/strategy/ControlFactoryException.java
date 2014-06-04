@@ -3,12 +3,12 @@ package de.skuzzle.stringz.strategy;
 import de.skuzzle.stringz.StringzRuntimeException;
 
 /**
- * This exception can be thrown by {@link ControlConfigurator} instances if
+ * This exception can be thrown by {@link ControlFactory} instances if
  * insufficient parameters are provided.
  * 
  * @author Simon Taddiken
  */
-public class ControlConfigurationException extends StringzRuntimeException {
+public class ControlFactoryException extends StringzRuntimeException {
 
     private static final long serialVersionUID = 1L;
 
@@ -17,7 +17,7 @@ public class ControlConfigurationException extends StringzRuntimeException {
      * 
      * @param message The error message.
      */
-    public ControlConfigurationException(String message) {
+    public ControlFactoryException(String message) {
         super(message);
     }
 
@@ -27,7 +27,7 @@ public class ControlConfigurationException extends StringzRuntimeException {
      * @param message The error message.
      * @param cause The cause.
      */
-    public ControlConfigurationException(String message, Exception cause) {
+    public ControlFactoryException(String message, Exception cause) {
         super(message, cause);
     }
 }

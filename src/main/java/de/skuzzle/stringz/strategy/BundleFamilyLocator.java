@@ -28,7 +28,7 @@ public interface BundleFamilyLocator {
      * 
      * @param messages The message class implementation to find the family for.
      * @return The name of the resource bundle family for that class.
-     * @throws BundleFamilyLocatorException Can be thrown to indicate malicious 
+     * @throws BundleFamilyException Can be thrown to indicate malicious 
      *          <tt>BundleFamilyLocator</tt> usage or configuration. 
      */
     public String locateBundleFamily(Class<?> messages);

@@ -8,31 +8,31 @@
  *  <li>Create an implementation of the desired strategy, e.g. implement 
  *      {@link de.skuzzle.stringz.strategy.FieldMapper FieldMapper} to specify a custom
  *      field mapping behavior. 
- *  <li>Create a <em>YourStrategy</em>Configurator implementation with a no arguments 
+ *  <li>Create a <em>YourStrategy</em>Factory implementation with a no arguments 
  *      public constructor. Make its <tt>configureXX</tt> method return an instance of 
  *      your strategy implementation.</li>
- *  <li>Mark your message class with the respective annotation to specify the 
- *      configurator. In case of the 
- *      {@link de.skuzzle.stringz.strategy.FieldMapperConfigurator FieldMapperConfigurator},
+ *  <li>Mark your message class with the respective annotation to specify the factory. 
+ *      In case of the 
+ *      {@link de.skuzzle.stringz.strategy.FieldMapperFactory FieldMapperFactory},
  *      use the {@link de.skuzzle.stringz.annotation.FieldMapping FieldMapping} annotation
- *      to specify the Class of your configurator.
+ *      to specify the Class of your factory.
  *      </li>
  * </ul>
  * 
- * <p>This shows the available strategies and their corresponding configurators and 
+ * <p>This shows the available strategies and their corresponding factorys and 
  * annotations:</p>
  * <table summary="Available strategies">
  * <tr>
- *     <th>Strategy</th><th>Configurator</th><th>Annotation</th>
+ *     <th>Strategy</th><th>Factory</th><th>Annotation</th>
  * </tr>
  * <tr>
  *     <td>{@link de.skuzzle.stringz.strategy.FieldMapper FieldMapper}</td>
- *     <td>{@link de.skuzzle.stringz.strategy.FieldMapperConfigurator FieldMapperConfigurator}</td>
+ *     <td>{@link de.skuzzle.stringz.strategy.FieldMapperFactory FieldMapperFactory}</td>
  *     <td>{@link de.skuzzle.stringz.annotation.FieldMapping &#64;FieldMapping}</td>
  * </tr>
  * <tr>
  *     <td>{@link java.util.ResourceBundle.Control Control}</td>
- *     <td>{@link de.skuzzle.stringz.strategy.ControlConfigurator ControlConfigurator}</td>
+ *     <td>{@link de.skuzzle.stringz.strategy.ControlFactory ControlFactory}</td>
  *     <td>{@link de.skuzzle.stringz.annotation.ResourceControl &#64;ResourceControl}</td>
  * </tr>
  * <tr>
@@ -46,7 +46,7 @@
  * <p>The {@link de.skuzzle.stringz.Stringz Stringz} class makes use of all these 
  * strategies when initializing a message class. The exact way in which the strategies
  * are used is defined using a {@link de.skuzzle.stringz.strategy.Strategies Strategies}
- * instance. E.g. the default behavior is to cache all created configurator classes. If
+ * instance. E.g. the default behavior is to cache all created factory classes. If
  * you do not like the caching behavior, you could 
  * {@link de.skuzzle.stringz.Stringz#setStrategies(Strategies) switch} the strategy
  * to e.g. {@link de.skuzzle.stringz.SimpleStrategies SimpleStrategies} or an own 
@@ -71,13 +71,13 @@
  * }
  * </pre>
  * 
- * Create the configurator:
+ * Create the Factory:
  * 
  * <pre>
- * public class PatternFieldMapperConfigurator implements FieldMapperConfigurator {
+ * public class PatternFieldMapperFactory implements FieldMapperFactory {
  * 
  *     &#64;Override
- *     public FieldMapper configure(ResourceMapping mapping, String[] args) {
+ *     public FieldMapper create(ResourceMapping mapping, String[] args) {
  *         if (args.length != 1) {
  *             throw new FieldMappingException("Missing pattern argument");
  *         }
@@ -92,11 +92,11 @@
  * }
  * </pre>
  * 
- * Now mark your message class to use the new configurator:
+ * Now mark your message class to use the new factory:
  * 
  * <pre>
  * &#64;ResourceMapping
- * &#64;FieldMapping(value = PatternFieldMapperConfigurator.class, args = { "prefix.*" })
+ * &#64;FieldMapping(value = PatternFieldMapperFactory.class, args = { "prefix.*" })
  * public class MSG {
  *     static {
  *         Stringz.init(MSG.class);

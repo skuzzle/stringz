@@ -17,9 +17,9 @@ import de.skuzzle.stringz.annotation.NoResource;
 import de.skuzzle.stringz.annotation.ResourceControl;
 import de.skuzzle.stringz.annotation.ResourceMapping;
 import de.skuzzle.stringz.strategy.BundleFamilyLocator;
-import de.skuzzle.stringz.strategy.BundleFamilyLocatorException;
-import de.skuzzle.stringz.strategy.ControlConfigurationException;
-import de.skuzzle.stringz.strategy.ControlConfigurator;
+import de.skuzzle.stringz.strategy.BundleFamilyException;
+import de.skuzzle.stringz.strategy.ControlFactoryException;
+import de.skuzzle.stringz.strategy.ControlFactory;
 import de.skuzzle.stringz.strategy.FieldMapper;
 import de.skuzzle.stringz.strategy.FieldMappingException;
 import de.skuzzle.stringz.strategy.Strategies;
@@ -140,23 +140,23 @@ import de.skuzzle.stringz.strategy.Strategies;
  * the ResourceMapping and creates a {@link java.util.PropertyResourceBundle}. If you 
  * want to supply a custom <tt>Control</tt> implementation, you can mark your message 
  * class with the {@link ResourceControl}. This annotation specifies a 
- * {@link ControlConfigurator} class which can be used to create a <tt>Control</tt> 
+ * {@link ControlFactory} class which can be used to create a <tt>Control</tt> 
  * instance which suits your needs. Below is an example usage. First, create your 
- * <tt>ControlConfigurator</tt> class:</p>
+ * <tt>ControlFactory</tt> class:</p>
  * <pre>
- * public class MyControlConfigurator implements ControlConfigurator {
+ * public class MyControlFactory implements ControlFactory {
  *     &#64;Override
- *     public Control configure(ResourceMapping mapping, String[] args) {
+ *     public Control create(ResourceMapping mapping, String[] args) {
  *         final String encoding = mapping.encoding();
  *         return new YourControlImplementation(encoding);
  *     }
  * }
  * </pre>
- * Now, specify that this configurator should be used to read the <tt>ResourceBundle</tt>
+ * Now, specify that this factory should be used to read the <tt>ResourceBundle</tt>
  * for your message class:
  * <pre>
  * &#64;ResourceMapping(value = "com.your.domain.BaseName", encoding = "iso-8859")
- * &#64;ResourceControl(MyControlConfigurator.class)
+ * &#64;ResourceControl(MyControlFactory.class)
  * public class MSG {
  *     static {
  *         Stringz.init(MSG.class);
@@ -164,8 +164,8 @@ import de.skuzzle.stringz.strategy.Strategies;
  *     // ..
  * }
  * </pre>
- * Stringz will create an instance of <tt>MyControlConfigurator</tt> and will then call
- * its {@link ControlConfigurator#configure(ResourceMapping, String[]) configure} method
+ * Stringz will create an instance of <tt>MyControlFactory</tt> and will then call
+ * its {@link ControlFactory#create(ResourceMapping, String[]) configure} method
  * to obtain a <tt>Control</tt> instance.
  * 
  * <h2>Extended ResourceBundle Features</h2>
@@ -213,12 +213,6 @@ import de.skuzzle.stringz.strategy.Strategies;
  * @author Simon Taddiken
  */
 public final class Stringz {
-
-    /** The default locale to use */
-    private static volatile Locale locale = Locale.getDefault();
-
-    /** Currently used strategies */
-    private static volatile Strategies strategies;
     
     /**
      * Registered locators to find the bundle family name for a Messages
@@ -240,7 +234,12 @@ public final class Stringz {
      */
     private final static Strategies DEFAULT_STRATEGIES = new CachedStrategies();
     
-    
+
+    /** The default locale to use */
+    private static volatile Locale locale = Locale.getDefault();
+
+    /** Currently used strategies */
+    private static volatile Strategies strategies = DEFAULT_STRATEGIES;
     
     /**
      * Registers the provided {@link BundleFamilyLocator}. The provided instance
@@ -259,11 +258,11 @@ public final class Stringz {
     /**
      * Retrieves a {@link BundleFamilyLocator} instance for the provided class.
      * If no locator has been registered for the provided class, a
-     * {@link BundleFamilyLocatorException} is thrown.
+     * {@link BundleFamilyException} is thrown.
      * 
      * @param cls The class of the locator to retrieve.
      * @return The locator that was registered for that class.
-     * @throws BundleFamilyLocatorException If there is no locator registered
+     * @throws BundleFamilyException If there is no locator registered
      *             for the specified class.
      */
     private static BundleFamilyLocator getLocator(
@@ -271,7 +270,7 @@ public final class Stringz {
         synchronized (FAMILY_LOCATORS) {
             final BundleFamilyLocator locator = FAMILY_LOCATORS.get(cls);
             if (locator == null) {
-                throw new BundleFamilyLocatorException(String.format(
+                throw new BundleFamilyException(String.format(
                         "No BundleFamilyLocator registered for '%s'", cls.getName()));
             }
             return locator;
@@ -357,7 +356,7 @@ public final class Stringz {
      * thrown.</p>
      * 
      * <p>If the provided class is annotated with {@link ResourceControl}, the therein
-     * specified {@link ControlConfigurator} class will be used to create a 
+     * specified {@link ControlFactory} class will be used to create a 
      * {@link java.util.ResourceBundle.Control} instance which in turn is used to resolve 
      * the ResourceBundle from which the Strings are loaded. If no such annotation is 
      * present, the Java default behavior is used.</p>
@@ -370,15 +369,15 @@ public final class Stringz {
      *             {@link ResourceBundle} can not be found or the provided class
      *             contains a public static String variable for which no mapping
      *             exists in the ResourceBundle.
-     * @throws BundleFamilyLocatorException If the class is annotated with
+     * @throws BundleFamilyException If the class is annotated with
      *             <tt>&#64;FamilyLocator</tt> and the specified 
      *             <tt>BundleFamilyLocator</tt> is not
      *             {@link #registerLocator(BundleFamilyLocator) registered}. Or if the 
      *             used <tt>BundleFamilyLocator</tt> fails to locate the bundle family.
-     * @throws ControlConfigurationException If the class is annotated with 
+     * @throws ControlFactoryException If the class is annotated with 
      *             <tt>&#64;ResourceControl</tt> and the provided 
-     *             <tt>ControlConfigurator</tt> class could not be instantiated or if its 
-     *             {@link ControlConfigurator#configure(ResourceMapping, String[]) configure} 
+     *             <tt>ControlFactory</tt> class could not be instantiated or if its 
+     *             {@link ControlFactory#create(ResourceMapping, String[]) configure} 
      *             method failed to create a <tt>Control</tt> instance.
      * @throws FieldMappingException If the used {@link FieldMapper} failed to assign a 
      *             value to a field.             
@@ -464,7 +463,7 @@ public final class Stringz {
     private static Control findControl(Class<?> cls, ResourceMapping mapping) {
         if (cls.isAnnotationPresent(ResourceControl.class)) {
             final ResourceControl rc = cls.getAnnotation(ResourceControl.class);
-            return strategies.configureControl(rc, mapping);
+            return strategies.getControl(rc, mapping);
         } else {
             return new CharsetBundleControl(mapping.encoding());
         }
@@ -473,7 +472,7 @@ public final class Stringz {
     private static FieldMapper findFieldMapper(Class<?> cls, ResourceMapping mapping) {
         if (cls.isAnnotationPresent(FieldMapping.class)) {
             final FieldMapping fm = cls.getAnnotation(FieldMapping.class);
-            return strategies.configureFieldMapper(fm, mapping);
+            return strategies.getFieldMapper(fm, mapping);
         } else {
             return DEFAULT_FIELD_MAPPER;
         }

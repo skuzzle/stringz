@@ -12,18 +12,18 @@ import de.skuzzle.stringz.annotation.ResourceMapping;
  * constructor if they are to be used with the {@link Stringz} class.
  * 
  * <p>On a class marked with {@link ResourceMapping} you can additionally specify the 
- * {@link ControlConfigurator} to use for retrieving the 
+ * {@link ControlFactory} to use for retrieving the 
  * {@link java.util.ResourceBundle ResourceBundle} of that class using the 
  * {@link ResourceControl} annotation. The {@link Stringz} class will then try to 
- * instantiate the provided ControlConfigurator class and call its 
- * {@link #configure(ResourceMapping, String[])} method in order to create a Control 
+ * instantiate the provided ControlFactory class and call its 
+ * {@link #create(ResourceMapping, String[])} method in order to create a Control 
  * instance. That instance is passed to the ResourceBundle's
  * {@link java.util.ResourceBundle#getBundle(String, java.util.Locale, ClassLoader, Control) getBundle}
  * method.</p>
  * 
  * @author Simon Taddiken
  */
-public interface ControlConfigurator {
+public interface ControlFactory {
 
     /**
      * Creates a {@link java.util.ResourceBundle.Control} instance which will be used
@@ -34,7 +34,7 @@ public interface ControlConfigurator {
      *          {@link ResourceMapping#encoding() encoding} of the bundle to load.
      * @param args Additional arguments from the {@link ResourceControl#args()} attribute.
      * @return The Control for reading the ResourceBundle of a message class.
-     * @throws ControlConfigurationException If invalid <tt>args</tt> have been provided.
+     * @throws ControlFactoryException If invalid <tt>args</tt> have been provided.
      */
-    public Control configure(ResourceMapping mapping, String[] args);
+    public Control create(ResourceMapping mapping, String[] args);
 }

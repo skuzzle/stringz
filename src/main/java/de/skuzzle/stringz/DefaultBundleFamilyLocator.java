@@ -1,7 +1,7 @@
 package de.skuzzle.stringz;
 
 import de.skuzzle.stringz.strategy.BundleFamilyLocator;
-import de.skuzzle.stringz.strategy.BundleFamilyLocatorException;
+import de.skuzzle.stringz.strategy.BundleFamilyException;
 
 /**
  * Implements the {@link Stringz} default base name lookup strategy. It uses a chain of
@@ -37,7 +37,7 @@ public class DefaultBundleFamilyLocator implements BundleFamilyLocator {
     public String locateBundleFamily(Class<?> messages) {
         try {
             return this.byPublicFieldLocator.locateBundleFamily(messages);
-        } catch (BundleFamilyLocatorException e) {
+        } catch (BundleFamilyException e) {
             return this.byPackageLocator.locateBundleFamily(messages);
         }
     }

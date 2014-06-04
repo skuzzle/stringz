@@ -18,7 +18,7 @@ public class ExtStringFieldMapper extends DefaultFieldMapper {
         return Modifier.isStatic(m) &&
                 !Modifier.isFinal(m) &&
                 Modifier.isPublic(m) &&
-                field.isAnnotationPresent(NoResource.class) &&
+                !field.isAnnotationPresent(NoResource.class) &&
                 ExtString.class.isAssignableFrom(field.getType());
     }
 
