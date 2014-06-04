@@ -35,7 +35,7 @@ within your `pom.xml`:
 <dependency>
     <groupId>de.skuzzle</groupId>
     <artifactId>stringz</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1.0-rc1</version>
     <scope>build</scope>
 </dependency>
 ```
