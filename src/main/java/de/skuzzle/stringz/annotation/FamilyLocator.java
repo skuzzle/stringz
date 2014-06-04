@@ -5,7 +5,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import de.skuzzle.stringz.PublicFieldBundleFamilyLocator;
 import de.skuzzle.stringz.strategy.BundleFamilyLocator;
 
 /**
@@ -36,5 +35,5 @@ public @interface FamilyLocator {
      * 
      * @return The class of the {@link BundleFamilyLocator} to use with this class.
      */
-    Class<? extends BundleFamilyLocator> value() default PublicFieldBundleFamilyLocator.class;
+    Class<? extends BundleFamilyLocator> value();
 }

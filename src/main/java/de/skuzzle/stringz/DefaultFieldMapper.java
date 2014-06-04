@@ -8,7 +8,7 @@ import de.skuzzle.stringz.annotation.NoResource;
 import de.skuzzle.stringz.annotation.ResourceKey;
 import de.skuzzle.stringz.annotation.ResourceMapping;
 import de.skuzzle.stringz.strategy.FieldMapper;
-import de.skuzzle.stringz.strategy.FieldMappingException;
+import de.skuzzle.stringz.strategy.FieldMapperException;
 
 /**
  * This is the default field mapping strategy for Stringz. See description of
@@ -59,7 +59,7 @@ public class DefaultFieldMapper implements FieldMapper {
      * </p>
      * 
      * @throws java.util.MissingResourceException {@inheritDoc}
-     * @throws FieldMappingException If the {@link Field#set(Object, Object)}
+     * @throws FieldMapperException If the {@link Field#set(Object, Object)}
      *             method fails with an {@link IllegalAccessException}.
      */
     @Override
@@ -70,7 +70,7 @@ public class DefaultFieldMapper implements FieldMapper {
         try {
             field.set(null, value);
         } catch (IllegalAccessException e) {
-            throw new FieldMappingException(String.format(
+            throw new FieldMapperException(String.format(
                     "Resource initialization failed. family=%s, field=%s, value=%s",
                     mapping.value(), field.getName(), value), e);
         }

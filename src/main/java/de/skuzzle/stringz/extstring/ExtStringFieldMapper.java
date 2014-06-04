@@ -8,7 +8,7 @@ import java.util.ResourceBundle;
 import de.skuzzle.stringz.DefaultFieldMapper;
 import de.skuzzle.stringz.annotation.NoResource;
 import de.skuzzle.stringz.annotation.ResourceMapping;
-import de.skuzzle.stringz.strategy.FieldMappingException;
+import de.skuzzle.stringz.strategy.FieldMapperException;
 
 public class ExtStringFieldMapper extends DefaultFieldMapper {
 
@@ -24,7 +24,7 @@ public class ExtStringFieldMapper extends DefaultFieldMapper {
 
     @Override
     public void mapField(ResourceMapping mapping, Field field, ResourceBundle bundle)
-            throws FieldMappingException, MissingResourceException {
+            throws FieldMapperException, MissingResourceException {
         
         field.setAccessible(true);
         final String resourceKey = getResourceKey(field);
@@ -36,7 +36,7 @@ public class ExtStringFieldMapper extends DefaultFieldMapper {
         try {
             field.set(null, extValue);
         } catch (IllegalAccessException e) {
-            throw new FieldMappingException(String.format(
+            throw new FieldMapperException(String.format(
                     "Resource initialization failed. family=%s, field=%s, value=%s",
                     mapping.value(), field.getName(), value), e);
         }

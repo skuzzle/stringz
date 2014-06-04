@@ -21,7 +21,7 @@ import de.skuzzle.stringz.strategy.BundleFamilyException;
 import de.skuzzle.stringz.strategy.ControlFactoryException;
 import de.skuzzle.stringz.strategy.ControlFactory;
 import de.skuzzle.stringz.strategy.FieldMapper;
-import de.skuzzle.stringz.strategy.FieldMappingException;
+import de.skuzzle.stringz.strategy.FieldMapperException;
 import de.skuzzle.stringz.strategy.Strategies;
 
 /**
@@ -379,7 +379,7 @@ public final class Stringz {
      *             <tt>ControlFactory</tt> class could not be instantiated or if its 
      *             {@link ControlFactory#create(ResourceMapping, String[]) configure} 
      *             method failed to create a <tt>Control</tt> instance.
-     * @throws FieldMappingException If the used {@link FieldMapper} failed to assign a 
+     * @throws FieldMapperException If the used {@link FieldMapper} failed to assign a 
      *             value to a field.             
      */
     public static void init(Class<?> cls, Locale locale) {

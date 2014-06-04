@@ -35,11 +35,11 @@ public interface FieldMapper {
      * @param field The field which value should be set.
      * @param bundle The <tt>ResourceBundle</tt> which belongs to the message class which 
      *          is currently processed.
-     * @throws FieldMappingException If assigning the desired value to <tt>field</tt>
+     * @throws FieldMapperException If assigning the desired value to <tt>field</tt>
      *          fails.
      * @throws MissingResourceException If a resource is accessed using a name which does
      *          not exist in the <tt>bundle</tt>.
      */
     public void mapField(ResourceMapping mapping, Field field, ResourceBundle bundle) 
-            throws FieldMappingException, MissingResourceException;
+            throws FieldMapperException, MissingResourceException;
 }

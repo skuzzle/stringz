@@ -7,7 +7,7 @@ import de.skuzzle.stringz.annotation.ResourceControl;
 import de.skuzzle.stringz.annotation.ResourceMapping;
 import de.skuzzle.stringz.strategy.ControlFactoryException;
 import de.skuzzle.stringz.strategy.FieldMapper;
-import de.skuzzle.stringz.strategy.FieldMappingException;
+import de.skuzzle.stringz.strategy.FieldMapperException;
 import de.skuzzle.stringz.strategy.Strategies;
 
 /**
@@ -38,11 +38,11 @@ public class SimpleStrategies implements Strategies {
 
     @Override
     public FieldMapper getFieldMapper(FieldMapping fm, ResourceMapping mapping)
-            throws FieldMappingException {
+            throws FieldMapperException {
         try {
             return fm.value().newInstance().create(mapping, fm.args());
         } catch (InstantiationException | IllegalAccessException e) {
-            throw new FieldMappingException(String.format(
+            throw new FieldMapperException(String.format(
                     "Could not create FieldMapper for class %s", fm.value()), e);
         }
     }

@@ -13,7 +13,7 @@ public class PublicFieldBundleFamilyLocatorTest {
 
     @Before
     public void setup() {
-        subject = new PublicFieldBundleFamilyLocator();
+        subject = new DefaultBundleFamilyLocator();
     }
     
     @Test

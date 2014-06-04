@@ -57,10 +57,10 @@ public interface Strategies {
      * @param mapping The <tt>ResourceMapping</tt> annotation of the target message class.
      * @return A <tt>FieldMapper</tt> instance which should be used to map fields of the
      *          target message class to resource values.
-     * @throws FieldMappingException If creation of the <tt>FieldMapper</tt> instance
+     * @throws FieldMapperException If creation of the <tt>FieldMapper</tt> instance
      *          fails for any reason.
      */
     public FieldMapper getFieldMapper(FieldMapping fm, ResourceMapping mapping) 
-            throws FieldMappingException;
+            throws FieldMapperException;
     
 }

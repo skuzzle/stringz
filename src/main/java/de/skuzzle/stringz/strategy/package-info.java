@@ -79,13 +79,13 @@
  *     &#64;Override
  *     public FieldMapper create(ResourceMapping mapping, String[] args) {
  *         if (args.length != 1) {
- *             throw new FieldMappingException("Missing pattern argument");
+ *             throw new FieldMapperException("Missing pattern argument");
  *         }
  *         try {
  *             final Pattern pattern = Pattern.compile(args[0]);
  *             return new PatternFieldMapper(pattern);
  *         } catch (PatternSyntaxException e) {
- *             throw new FieldMappingException(String.format(
+ *             throw new FieldMapperException(String.format(
  *                 "Illegal pattern: %s", args[0]), e);
  *         }
  *     }

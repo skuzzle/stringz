@@ -11,7 +11,7 @@ import de.skuzzle.stringz.strategy.ControlFactoryException;
 import de.skuzzle.stringz.strategy.ControlFactory;
 import de.skuzzle.stringz.strategy.FieldMapper;
 import de.skuzzle.stringz.strategy.FieldMapperFactory;
-import de.skuzzle.stringz.strategy.FieldMappingException;
+import de.skuzzle.stringz.strategy.FieldMapperException;
 import de.skuzzle.stringz.strategy.Strategies;
 
 /**
@@ -85,13 +85,13 @@ public class CachedStrategies implements Strategies {
 
     @Override
     public FieldMapper getFieldMapper(FieldMapping fm, ResourceMapping mapping)
-            throws FieldMappingException {
+            throws FieldMapperException {
         try {
             final FieldMapperFactory control = getCached(this.fieldMapperCache,
                     fm.value());
             return control.create(mapping, fm.args());
         } catch (InstantiationException | IllegalAccessException e) {
-            throw new FieldMappingException(String.format(
+            throw new FieldMapperException(String.format(
                     "Could not create FieldMapper for class %s", fm.value()), e);
         }
     }
