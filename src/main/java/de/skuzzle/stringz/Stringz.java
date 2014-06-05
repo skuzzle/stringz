@@ -11,10 +11,13 @@ import java.util.ResourceBundle;
 import java.util.ResourceBundle.Control;
 import java.util.Set;
 
+import de.skuzzle.stringz.annotation.Delimiter;
 import de.skuzzle.stringz.annotation.FamilyLocator;
 import de.skuzzle.stringz.annotation.FieldMapping;
 import de.skuzzle.stringz.annotation.NoResource;
+import de.skuzzle.stringz.annotation.ResourceCollection;
 import de.skuzzle.stringz.annotation.ResourceControl;
+import de.skuzzle.stringz.annotation.ResourceKey;
 import de.skuzzle.stringz.annotation.ResourceMapping;
 import de.skuzzle.stringz.strategy.BundleFamilyLocator;
 import de.skuzzle.stringz.strategy.BundleFamilyException;
@@ -22,6 +25,7 @@ import de.skuzzle.stringz.strategy.ControlFactoryException;
 import de.skuzzle.stringz.strategy.ControlFactory;
 import de.skuzzle.stringz.strategy.FieldMapper;
 import de.skuzzle.stringz.strategy.FieldMapperException;
+import de.skuzzle.stringz.strategy.FieldMapperFactory;
 import de.skuzzle.stringz.strategy.Strategies;
 
 /**
@@ -167,6 +171,32 @@ import de.skuzzle.stringz.strategy.Strategies;
  * Stringz will create an instance of <tt>MyControlFactory</tt> and will then call
  * its {@link ControlFactory#create(ResourceMapping, String[]) configure} method
  * to obtain a <tt>Control</tt> instance.
+ * 
+ * <h2>Field Mapping</h2>
+ * <p>By default, {@link Stringz} iterates all public static String fields of a class and 
+ * tries to assign each variable the value from the resource bundle stored with the name
+ * of that variable. If you want a variable to be mapped to an explicitly different 
+ * resource, you can specify an alternate key to use for look up with 
+ * {@link ResourceKey} annotation. If you do not want a field to be mapped to a resource
+ * value, you can mark it with {@link NoResource}.</p>
+ * 
+ * <p>Besides simple Strings, String arrays are also supported. If Stringz finds a public
+ * static String[] variable, it tries to split the respective resource value using a
+ * {@link DefaultFieldMapper#getDefaultDelimiter() default} delimiter. You can also 
+ * specify an explicit delimiter pattern using {@link Delimiter} annotation. Finally, you
+ * can construct array resources from multiple other resources using 
+ * {@link ResourceCollection}:</p>
+ * <pre>
+ * &#64;ResourceCollection({"keyOfOtherResource", "keyOfSecondOtherResource"})
+ * public static String[] customArray;
+ * </pre>
+ * <p>In this case, the array's name will be ignored for resource look up but an array 
+ * from the specified resource names will be created.</p>
+ * 
+ * <p>The whole field mapping process can be customized in the same way in which you can
+ * customize the resource look up process as described above. Here you would need 
+ * a {@link FieldMapper} and a {@link FieldMapperFactory} to supply custom behavior. The
+ * default implementation can be found in {@link DefaultFieldMapper}.</p>
  * 
  * <h2>Extended ResourceBundle Features</h2>
  * Stringz allows you to use normal <tt>property</tt> files to define
