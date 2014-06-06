@@ -116,16 +116,43 @@ public class DefaultFieldMapper implements FieldMapper {
         }
     }
     
+    /**
+     * Gets the delimiter pattern which will be used as default to split strings which
+     * will be assigned to <tt>public static String[]</tt> variables.
+     * 
+     * @return The delimiter pattern.
+     */
     protected String getDefaultDelimiter() {
         return DEFAULT_DELIMITER;
     }
 
+    /**
+     * Gets a resource value for the provided <tt>key</tt> from the provided 
+     * <tt>bundle</tt>. If the mapping's {@link ResourceMapping#intern() intern} 
+     * attribute is <code>true</code>, then the retrieved resource value will be interned
+     * in terms of {@link String#intern()}.
+     * 
+     * @param mapping The {@link ResourceMapping} annotation of the processed message 
+     *          class
+     * @param bundle The resolved {@link ResourceBundle} for that message class.
+     * @param resourceKey The key of the resource value to retrieve.
+     * @return The resource value for the given <tt>key</tt>.
+     */
     protected String getValue(ResourceMapping mapping, ResourceBundle bundle,
             String resourceKey) {
         final String value = bundle.getString(resourceKey);
         return mapping.intern() ? value.intern() : value;
     }
 
+    /**
+     * Gets the key which will be used to reference a resource value for a field which is
+     * to be assigned. If a {@link ResourceKey} annotation is present on the provided 
+     * field, its {@link ResourceKey#value() value} will be used as key, otherwise,
+     * the field's name is returned.
+     * 
+     * @param field The field for which to retrieved the resource key.
+     * @return The key to use for resource look up.
+     */
     protected String getResourceKey(Field field) {
         if (field.isAnnotationPresent(ResourceKey.class)) {
             final ResourceKey rk = field.getAnnotation(ResourceKey.class);

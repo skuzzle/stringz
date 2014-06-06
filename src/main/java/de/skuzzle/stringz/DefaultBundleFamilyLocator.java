@@ -13,7 +13,7 @@ import de.skuzzle.stringz.strategy.BundleFamilyException;
  * locate a public static String field with the name returned by 
  * {@link #getConstantName()}. If such a field is present, its value will be returned 
  * as base name. Otherwise, the full qualified name of the provided class itself will
- * bre returned.
+ * be returned.
  * 
  * @author Simon Taddiken
  */
