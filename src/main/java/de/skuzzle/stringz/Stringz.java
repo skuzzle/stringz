@@ -119,15 +119,16 @@ import de.skuzzle.stringz.strategy.Strategies;
  * }
  * </pre>
  * 
- * Register the locator with the <tt>Stringz</tt> class:
+ * <p>Register the locator with the <tt>Stringz</tt> class:</p>
  * 
  * <pre>
  * Stringz.registerLocator(new StaticFamilyLocator());
  * </pre>
  * 
- * Specify the locator to use on your message class:
+ * <p>Specify the locator to use on your message class:</p>
+ * 
  * <pre>
- * &#64;ResourceMapping()   // important: leave value() attribute empty
+ * &#64;ResourceMapping   // important: leave value() attribute empty
  * &#64;FamilyLocator(StaticFamilyLocator.class)
  * public class MSG {
  *     static {
@@ -156,8 +157,8 @@ import de.skuzzle.stringz.strategy.Strategies;
  *     }
  * }
  * </pre>
- * Now, specify that this factory should be used to read the <tt>ResourceBundle</tt>
- * for your message class:
+ * <p>Now, specify that this factory should be used to read the <tt>ResourceBundle</tt>
+ * for your message class:</p>
  * <pre>
  * &#64;ResourceMapping(value = "com.your.domain.BaseName", encoding = "iso-8859")
  * &#64;ResourceControl(MyControlFactory.class)
@@ -168,9 +169,9 @@ import de.skuzzle.stringz.strategy.Strategies;
  *     // ..
  * }
  * </pre>
- * Stringz will create an instance of <tt>MyControlFactory</tt> and will then call
+ * <p>Stringz will create an instance of <tt>MyControlFactory</tt> and will then call
  * its {@link ControlFactory#create(ResourceMapping, String[]) configure} method
- * to obtain a <tt>Control</tt> instance.
+ * to obtain a <tt>Control</tt> instance.</p>
  * 
  * <h2>Field Mapping</h2>
  * <p>By default, {@link Stringz} iterates all public static String fields of a class and 
@@ -199,22 +200,22 @@ import de.skuzzle.stringz.strategy.Strategies;
  * default implementation can be found in {@link DefaultFieldMapper}.</p>
  * 
  * <h2>Extended ResourceBundle Features</h2>
- * Stringz allows you to use normal <tt>property</tt> files to define
+ * <p>Stringz allows you to use normal <tt>property</tt> files to define
  * externalized Strings but it offers some advanced features over normal
- * java property files.
+ * java property files.</p>
  * 
  * <h3>Key References</h3>
- * Within a mapping pair, you can refer to any other key within the scope of
- * your properties file. For example:
+ * <p>Within a mapping pair, you can refer to any other key within the scope of
+ * your properties file. For example:</p>
  * 
  * <pre>
  * userName = Username
  * promptUserName = Please insert your ${userName}
  * </pre>
  * 
- * Accessing the resource with name <tt>promptUserName</tt> will yield the
+ * <p>Accessing the resource with name <tt>promptUserName</tt> will yield the
  * String <tt>Please insert your Username</tt>. These key references are also
- * applied transitively:
+ * applied transitively:</p>
  * 
  * <pre>
  * userName = Username
@@ -222,23 +223,23 @@ import de.skuzzle.stringz.strategy.Strategies;
  * promptPassword = ${promptUserName} and password
  * </pre>
  * 
- * Here, the resource with name <tt>promptPassword</tt> would resolve to the
- * String <tt>Please insert your Username and password</tt>.
+ * <p>Here, the resource with name <tt>promptPassword</tt> would resolve to the
+ * String <tt>Please insert your Username and password</tt>.</p>
  * 
  * <h3>Inclusion of Other Bundles</h3>
- * Properties files used by the <tt>Stringz</tt> class can also have a special key
+ * <p>Properties files used by the <tt>Stringz</tt> class can also have a special key
  * mapping named <tt>&#64;include</tt> which expects a semicolon separated list
  * of other ResourceBundle baseNames to include into the scope of the current
  * file. This will make all mappings of the included bundles visible for key
- * references as described above.
+ * references as described above.</p>
  * 
  * <pre>
  * &#64;include = com.your.domain.CommonNames;
  * key = ${referenceToKeyFromIncludedBundle}
  * </pre>
  * 
- * Included key/value pairs will also be mapped to the String variables of your message
- * class.
+ * <p>Included key/value pairs will also be mapped to the String variables of your message
+ * class.</p>
  * 
  * @author Simon Taddiken
  */
