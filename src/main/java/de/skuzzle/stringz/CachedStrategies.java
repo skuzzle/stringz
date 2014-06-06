@@ -47,7 +47,7 @@ public class CachedStrategies implements Strategies {
      * in the provided <tt>cache</tt>. If no instance for T is cached, a new one will be
      * instantiated and stored.
      * 
-     * <p>This method is synchronized on the passe <tt>cache</tt>.</p> 
+     * <p>This method is synchronized on the passed <tt>cache</tt>.</p> 
      * 
      * @param <T> Type of values in the cache.
      * @param cache The cache to retrieve the instance from or to put a newly created 
