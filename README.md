@@ -36,7 +36,6 @@ within your `pom.xml`:
     <groupId>de.skuzzle</groupId>
     <artifactId>stringz</artifactId>
     <version>0.1.0-rc1</version>
-    <scope>build</scope>
 </dependency>
 ```
 
@@ -113,7 +112,7 @@ the resource. All other magic is handled by the
 `ResourceBundle.getResource(...)` method.
 
 By default, Stringz uses the full qualified name of the class annotated with 
-`@ResourceMapping` as base name for resource look up. If you class's name is 
+`@ResourceMapping` as base name for resource look up. If your class's name is 
 `com.your.domain.MSG`, then Stringz will use that String as base name to find 
 resources named `MSG` within the same java package. So you would place a
 `MSG.properties` into that package and additionally further files like 
