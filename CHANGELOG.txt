@@ -1,0 +1,4 @@
+Stringz Changelog
+
+19.07.2014 - v0.1.0
+    * Initial Release
