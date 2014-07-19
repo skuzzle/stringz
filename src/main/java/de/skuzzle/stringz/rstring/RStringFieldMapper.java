@@ -1,4 +1,4 @@
-package de.skuzzle.stringz.extstring;
+package de.skuzzle.stringz.rstring;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -10,7 +10,7 @@ import de.skuzzle.stringz.annotation.NoResource;
 import de.skuzzle.stringz.annotation.ResourceMapping;
 import de.skuzzle.stringz.strategy.FieldMapperException;
 
-public class ExtStringFieldMapper extends DefaultFieldMapper {
+public class RStringFieldMapper extends DefaultFieldMapper {
 
     @Override
     public boolean accept(Field field) {
@@ -19,7 +19,7 @@ public class ExtStringFieldMapper extends DefaultFieldMapper {
                 !Modifier.isFinal(m) &&
                 Modifier.isPublic(m) &&
                 !field.isAnnotationPresent(NoResource.class) &&
-                ExtString.class.isAssignableFrom(field.getType());
+                RString.class.isAssignableFrom(field.getType());
     }
 
     @Override
@@ -29,9 +29,9 @@ public class ExtStringFieldMapper extends DefaultFieldMapper {
         field.setAccessible(true);
         final String resourceKey = getResourceKey(field);
         final String value = getValue(mapping, bundle, resourceKey);
-        final ExtString extValue = mapping.intern() 
-                ? new ExtString(value).intern() 
-                : new ExtString(value);
+        final RString extValue = mapping.intern() 
+                ? new RString(value).intern() 
+                : new RString(value);
                 
         try {
             field.set(null, extValue);

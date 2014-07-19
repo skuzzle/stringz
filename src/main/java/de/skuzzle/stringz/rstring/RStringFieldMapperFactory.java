@@ -1,11 +1,11 @@
-package de.skuzzle.stringz.extstring;
+package de.skuzzle.stringz.rstring;
 
 import de.skuzzle.stringz.annotation.ResourceMapping;
 import de.skuzzle.stringz.strategy.FieldMapper;
 import de.skuzzle.stringz.strategy.FieldMapperFactory;
 import de.skuzzle.stringz.strategy.FieldMapperException;
 
-public class ExtStringFieldMapperFactory implements FieldMapperFactory {
+public class RStringFieldMapperFactory implements FieldMapperFactory {
 
     @Override
     public FieldMapper create(ResourceMapping mapping, String[] args)
@@ -15,6 +15,6 @@ public class ExtStringFieldMapperFactory implements FieldMapperFactory {
             throw new FieldMapperException("No arguments expected");
         }
         
-        return new ExtStringFieldMapper();
+        return new RStringFieldMapper();
     }
 }

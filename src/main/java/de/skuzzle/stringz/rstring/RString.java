@@ -1,51 +1,62 @@
-package de.skuzzle.stringz.extstring;
+package de.skuzzle.stringz.rstring;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class ExtString {
-    
-    private final static Map<String, ExtString> INTERN_CACHE = new HashMap<>();
-    
-    public final static ExtString EMPTY = new ExtString("").intern();
-        
-    
+public class RString {
+
+    private final static Map<String, RString> INTERN_CACHE = new HashMap<>();
+
+    public final static RString EMPTY = new RString("").intern();
+
+    public static RString intern(String s) {
+        synchronized (INTERN_CACHE) {
+            RString result = INTERN_CACHE.get(s);
+            if (result == null) {
+                result = new RString(s);
+                INTERN_CACHE.put(s, result);
+            }
+            return result;
+        }
+    }
+
+
     public final String s;
     public final int length;
-    
-    public ExtString(String s) {
+
+    public RString(String s) {
         if (s == null) {
             throw new IllegalArgumentException("s is null");
         }
         this.s = s;
         this.length = s.length();
     }
-    
-    public ExtString intern() {
+
+    public RString intern() {
         synchronized (INTERN_CACHE) {
-            ExtString canonical = INTERN_CACHE.get(this.s);
+            RString canonical = INTERN_CACHE.get(this.s);
             if (canonical == null) {
-                canonical = new ExtString(this.s.intern());
+                canonical = new RString(this.s.intern());
                 INTERN_CACHE.put(canonical.s, canonical);
             }
             return canonical;
         }
     }
-    
+
     public String s(Object...args) {
         return String.format(this.s, args);
     }
-    
+
     @Override
     public String toString() {
         return this.s;
     }
-    
+
     @Override
     public int hashCode() {
         return this.s.hashCode();
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (obj == this) {
@@ -53,11 +64,11 @@ public class ExtString {
         } else if (obj == null) {
             return true;
         }
-        
+
         if (obj instanceof String) {
             return this.s.equals(obj);
-        } else if (obj instanceof ExtString) {
-            return this.s.equals(((ExtString) obj).s);
+        } else if (obj instanceof RString) {
+            return this.s.equals(((RString) obj).s);
         }
         return false;
     }
