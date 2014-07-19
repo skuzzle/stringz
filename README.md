@@ -16,7 +16,7 @@ stringz is distributed under the MIT License. See `LICENSE.md` in this directory
 for detailed information.
 
 ## Documentation
-JavaDoc is available at www.skuzzle.de/stringz/1.0.0/doc
+JavaDoc is available at www.skuzzle.de/stringz/0.1.0/doc
 
 Scroll down in this readme for a quick start guide and some advanced topics.
 
