@@ -19,7 +19,7 @@
       <outputDirectory>/</outputDirectory>
     </file>
     <file>
-      <source>changelog.txt</source>
+      <source>CHANGELOG.txt</source>
       <destName>CHANGELOG.txt</destName>
       <outputDirectory>/</outputDirectory>
     </file>
