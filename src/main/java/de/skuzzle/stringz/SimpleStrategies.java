@@ -11,17 +11,19 @@ import de.skuzzle.stringz.strategy.FieldMapperException;
 import de.skuzzle.stringz.strategy.Strategies;
 
 /**
- * This is the simplest possible implementation of the {@link Strategies} interface.
- * Each <tt>configureXX</tt> method will always instantiate a new instance of the 
- * required <tt>Factory</tt> and will then use the Factory to create the
- * desired object. If you would like to cache <tt>Factory</tt> instances, use
+ * This is the simplest possible implementation of the {@link Strategies}
+ * interface. Each getter method will always instantiate a new instance of the
+ * required <tt>Factory</tt> and will then use the Factory to create the desired
+ * object. If you would like to cache <tt>Factory</tt> instances, use
  * {@link CachedStrategies} instead.
- * 
- * <p>Call <tt>Stringz.setStrategies(new CachedStrategies())</tt> to use this 
- * implementation.</p>
- * 
+ *
+ * <p>
+ * Call <tt>Stringz.setStrategies(new CachedStrategies())</tt> to use this
+ * implementation.
+ * </p>
+ *
  * @author Simon Taddiken
- * @see SimpleStrategies
+ * @see CachedStrategies
  */
 public class SimpleStrategies implements Strategies {
 
