@@ -25,14 +25,14 @@ public class RStringFieldMapper extends DefaultFieldMapper {
     @Override
     public void mapField(ResourceMapping mapping, Field field, ResourceBundle bundle)
             throws FieldMapperException, MissingResourceException {
-        
+
         field.setAccessible(true);
         final String resourceKey = getResourceKey(field);
         final String value = getValue(mapping, bundle, resourceKey);
-        final RString extValue = mapping.intern() 
-                ? new RString(value).intern() 
+        final RString extValue = mapping.intern()
+                ? RString.intern(value)
                 : new RString(value);
-                
+
         try {
             field.set(null, extValue);
         } catch (IllegalAccessException e) {

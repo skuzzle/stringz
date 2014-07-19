@@ -33,14 +33,7 @@ public class RString {
     }
 
     public RString intern() {
-        synchronized (INTERN_CACHE) {
-            RString canonical = INTERN_CACHE.get(this.s);
-            if (canonical == null) {
-                canonical = new RString(this.s.intern());
-                INTERN_CACHE.put(canonical.s, canonical);
-            }
-            return canonical;
-        }
+        return intern(this.s.intern());
     }
 
     public String s(Object...args) {
