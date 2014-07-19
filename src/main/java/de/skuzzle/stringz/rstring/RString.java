@@ -3,7 +3,7 @@ package de.skuzzle.stringz.rstring;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RString {
+class RString {
 
     private final static Map<String, RString> INTERN_CACHE = new HashMap<>();
 

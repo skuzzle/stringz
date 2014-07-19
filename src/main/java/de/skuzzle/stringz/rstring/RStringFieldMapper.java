@@ -10,7 +10,7 @@ import de.skuzzle.stringz.annotation.NoResource;
 import de.skuzzle.stringz.annotation.ResourceMapping;
 import de.skuzzle.stringz.strategy.FieldMapperException;
 
-public class RStringFieldMapper extends DefaultFieldMapper {
+class RStringFieldMapper extends DefaultFieldMapper {
 
     @Override
     public boolean accept(Field field) {

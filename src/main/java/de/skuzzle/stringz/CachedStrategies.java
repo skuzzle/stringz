@@ -1,5 +1,7 @@
 package de.skuzzle.stringz;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle.Control;
@@ -7,22 +9,22 @@ import java.util.ResourceBundle.Control;
 import de.skuzzle.stringz.annotation.FieldMapping;
 import de.skuzzle.stringz.annotation.ResourceControl;
 import de.skuzzle.stringz.annotation.ResourceMapping;
-import de.skuzzle.stringz.strategy.ControlFactoryException;
 import de.skuzzle.stringz.strategy.ControlFactory;
+import de.skuzzle.stringz.strategy.ControlFactoryException;
 import de.skuzzle.stringz.strategy.FieldMapper;
-import de.skuzzle.stringz.strategy.FieldMapperFactory;
 import de.skuzzle.stringz.strategy.FieldMapperException;
+import de.skuzzle.stringz.strategy.FieldMapperFactory;
 import de.skuzzle.stringz.strategy.Strategies;
 
 /**
- * These strategies only instantiate every {@link ControlFactory} and 
- * {@link FieldMapperFactory} once. When a <tt>Factory</tt> for the same class 
- * is requested, the cached instance will be returned. If you require a simple, 
+ * These strategies only instantiate every {@link ControlFactory} and
+ * {@link FieldMapperFactory} once. When a <tt>Factory</tt> for the same class
+ * is requested, the cached instance will be returned. If you require a simple,
  * non-caching implementation, use {@link SimpleStrategies} instead.
- * 
- * <p>Call <tt>Stringz.setStrategies(new CachedStrategies()</tt> to use this 
+ *
+ * <p>Call <tt>Stringz.setStrategies(new CachedStrategies()</tt> to use this
  * implementation.</p>
- * 
+ *
  * @author Simon Taddiken
  * @see SimpleStrategies
  */
@@ -30,7 +32,7 @@ public class CachedStrategies implements Strategies {
 
     /** Cache for {@link ControlFactory ControlFactorys} */
     protected final Map<Class<? extends ControlFactory>, ControlFactory> controlCache;
-    
+
     /** Cache for {@link FieldMapperFactory FieldMapperFactorys} */
     protected final Map<Class<? extends FieldMapperFactory>, FieldMapperFactory> fieldMapperCache;
 
@@ -46,11 +48,11 @@ public class CachedStrategies implements Strategies {
      * This method returns an object T which is stored under the specified <tt>key</tt>
      * in the provided <tt>cache</tt>. If no instance for T is cached, a new one will be
      * instantiated and stored.
-     * 
-     * <p>This method is synchronized on the passed <tt>cache</tt>.</p> 
-     * 
+     *
+     * <p>This method is synchronized on the passed <tt>cache</tt>.</p>
+     *
      * @param <T> Type of values in the cache.
-     * @param cache The cache to retrieve the instance from or to put a newly created 
+     * @param cache The cache to retrieve the instance from or to put a newly created
      *          instance in.
      * @param key The key of the object to retrieve.
      * @return A cached instance of the class <tt>key</tt> which is optionally created
@@ -63,8 +65,15 @@ public class CachedStrategies implements Strategies {
         synchronized (cache) {
             T result = cache.get(key);
             if (result == null) {
-                result = key.newInstance();
-                cache.put(key, result);
+                try {
+                    final Constructor<? extends T> ctor = key.getConstructor();
+                    ctor.setAccessible(true);
+                    result = ctor.newInstance();
+                    cache.put(key, result);
+                } catch (NoSuchMethodException | SecurityException
+                        | IllegalArgumentException | InvocationTargetException e) {
+                    throw new StringzRuntimeException(e);
+                }
             }
             return result;
         }

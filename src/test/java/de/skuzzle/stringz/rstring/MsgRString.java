@@ -1,5 +1,6 @@
-package de.skuzzle.stringz;
+package de.skuzzle.stringz.rstring;
 
+import de.skuzzle.stringz.Stringz;
 import de.skuzzle.stringz.annotation.FieldMapping;
 import de.skuzzle.stringz.annotation.NoResource;
 import de.skuzzle.stringz.annotation.ResourceMapping;
@@ -8,10 +9,10 @@ import de.skuzzle.stringz.rstring.RStringFieldMapperFactory;
 
 @ResourceMapping("de.skuzzle.stringz.test")
 @FieldMapping(RStringFieldMapperFactory.class)
-public class MsgExtString {
+public class MsgRString {
 
     static {
-        Stringz.init(MsgExtString.class);
+        Stringz.init(MsgRString.class);
     }
     
     public static RString testKey1;
