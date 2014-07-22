@@ -1,5 +1,6 @@
 package de.skuzzle.stringz;
 
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -51,7 +52,7 @@ import de.skuzzle.stringz.strategy.Strategies;
  *     static {
  *         Stringz.init(MSG.class);
  *     }
- * 
+ *
  *     public static String resourceKey;
  *     public static String resourceKey1;
  *     public static String resourceKeyX;
@@ -165,7 +166,7 @@ import de.skuzzle.stringz.strategy.Strategies;
  * instance which suits your needs. Below is an example usage. First, create
  * your <tt>ControlFactory</tt> class:
  * </p>
- * 
+ *
  * <pre>
  * public class MyControlFactory implements ControlFactory {
  *     &#064;Override
@@ -179,7 +180,7 @@ import de.skuzzle.stringz.strategy.Strategies;
  * Now, specify that this factory should be used to read the
  * <tt>ResourceBundle</tt> for your message class:
  * </p>
- * 
+ *
  * <pre>
  * &#064;ResourceMapping(value = &quot;com.your.domain.BaseName&quot;, encoding = &quot;iso-8859&quot;)
  * &#064;ResourceControl(MyControlFactory.class)
@@ -214,7 +215,7 @@ import de.skuzzle.stringz.strategy.Strategies;
  * {@link Delimiter} annotation. Finally, you can construct array resources from
  * multiple other resources using {@link ResourceCollection}:
  * </p>
- * 
+ *
  * <pre>
  * &#064;ResourceCollection({ &quot;keyOfOtherResource&quot;, &quot;keyOfSecondOtherResource&quot; })
  * public static String[] customArray;
@@ -489,8 +490,9 @@ public final class Stringz {
         final FieldMapper fieldMapper = findFieldMapper(cls, rm);
         // Map fields to bundle entries
         Arrays.stream(cls.getFields())
-            .filter(fieldMapper::accept)
-            .forEach(field -> fieldMapper.mapField(rm, field, bundle));
+                .filter(field -> Modifier.isStatic(field.getModifiers()))
+                .filter(fieldMapper::accept)
+                .forEach(field -> fieldMapper.mapField(rm, field, bundle));
     }
 
     /**

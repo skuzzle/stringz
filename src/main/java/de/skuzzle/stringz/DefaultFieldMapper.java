@@ -17,7 +17,7 @@ import de.skuzzle.stringz.strategy.FieldMapperException;
  * {@link #accept(Field) accept} and
  * {@link #mapField(ResourceMapping, Field, ResourceBundle) mapField} to learn
  * how values are assigned to which fields.
- * 
+ *
  * @author Simon Taddiken
  */
 public class DefaultFieldMapper implements FieldMapper {
@@ -32,7 +32,6 @@ public class DefaultFieldMapper implements FieldMapper {
      * passed field
      * </p>
      * <ul>
-     * <li>is static,</li>
      * <li>is public,</li>
      * <li>is <em>not</em> final,</li>
      * <li>is declared as either String or String[] and</li>
@@ -41,8 +40,7 @@ public class DefaultFieldMapper implements FieldMapper {
      */
     @Override
     public boolean accept(Field field) {
-        return Modifier.isStatic(field.getModifiers()) &&
-                Modifier.isPublic(field.getModifiers()) &&
+        return Modifier.isPublic(field.getModifiers()) &&
                 !Modifier.isFinal(field.getModifiers()) &&
                 (field.getType() == String.class || field.getType() == String[].class) &&
                 !field.isAnnotationPresent(NoResource.class);
@@ -50,19 +48,19 @@ public class DefaultFieldMapper implements FieldMapper {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * <p>
-     * Implements the default field assignment strategy for <tt>Stringz</tt>. If field 
+     * Implements the default field assignment strategy for <tt>Stringz</tt>. If field
      * has any other type than <tt>String</tt> or <tt>String[]</tt>, an exception will be
      * caused. The value for the field will be
      * retrieved using {@link ResourceBundle#getString(String)}. If the passed
      * ResourceMapping's <tt>intern</tt> attribute is <code>true</code>,
      * {@link String#intern()} will be called before assigning the value to the
      * field.</p>
-     * 
-     * <p>This method also handles the annotations {@link ResourceCollection} and 
+     *
+     * <p>This method also handles the annotations {@link ResourceCollection} and
      * {@link Delimiter} for String array resources.</p>
-     * 
+     *
      * @throws java.util.MissingResourceException {@inheritDoc}
      * @throws FieldMapperException If the {@link Field#set(Object, Object)}
      *             method fails with an {@link IllegalAccessException}.
@@ -70,14 +68,14 @@ public class DefaultFieldMapper implements FieldMapper {
     @Override
     public void mapField(ResourceMapping mapping, Field field, ResourceBundle bundle) {
         field.setAccessible(true);
-        
+
         final Object value;
         if (field.getType() == String.class) {
-        
+
             final String resourceKey = getResourceKey(field);
             value = getValue(mapping, bundle, resourceKey);
 
-        
+
         } else if (field.getType() == String[].class) {
             if (field.isAnnotationPresent(ResourceCollection.class)) {
                 final ResourceCollection rc = field.getAnnotation(
@@ -89,7 +87,7 @@ public class DefaultFieldMapper implements FieldMapper {
                 }
                 value = v;
             } else {
-                
+
                 final String delimiterPattern;
                 if (field.isAnnotationPresent(Delimiter.class)) {
                     final Delimiter delimiter = field.getAnnotation(Delimiter.class);
@@ -97,7 +95,7 @@ public class DefaultFieldMapper implements FieldMapper {
                 } else {
                     delimiterPattern = DEFAULT_DELIMITER;
                 }
-                
+
                 final String resourceKey = getResourceKey(field);
                 final String resource = getValue(mapping, bundle, resourceKey);
                 value = resource.split(delimiterPattern);
@@ -106,7 +104,7 @@ public class DefaultFieldMapper implements FieldMapper {
             // should not be reachable as by #accept method
             throw new IllegalStateException();
         }
-        
+
         try {
             field.set(null, value);
         } catch (IllegalAccessException e) {
@@ -115,11 +113,11 @@ public class DefaultFieldMapper implements FieldMapper {
                     mapping.value(), field.getName(), value), e);
         }
     }
-    
+
     /**
      * Gets the delimiter pattern which will be used as default to split strings which
      * will be assigned to <tt>public static String[]</tt> variables.
-     * 
+     *
      * @return The delimiter pattern.
      */
     protected String getDefaultDelimiter() {
@@ -127,12 +125,12 @@ public class DefaultFieldMapper implements FieldMapper {
     }
 
     /**
-     * Gets a resource value for the provided <tt>key</tt> from the provided 
-     * <tt>bundle</tt>. If the mapping's {@link ResourceMapping#intern() intern} 
+     * Gets a resource value for the provided <tt>key</tt> from the provided
+     * <tt>bundle</tt>. If the mapping's {@link ResourceMapping#intern() intern}
      * attribute is <code>true</code>, then the retrieved resource value will be interned
      * in terms of {@link String#intern()}.
-     * 
-     * @param mapping The {@link ResourceMapping} annotation of the processed message 
+     *
+     * @param mapping The {@link ResourceMapping} annotation of the processed message
      *          class
      * @param bundle The resolved {@link ResourceBundle} for that message class.
      * @param resourceKey The key of the resource value to retrieve.
@@ -146,10 +144,10 @@ public class DefaultFieldMapper implements FieldMapper {
 
     /**
      * Gets the key which will be used to reference a resource value for a field which is
-     * to be assigned. If a {@link ResourceKey} annotation is present on the provided 
+     * to be assigned. If a {@link ResourceKey} annotation is present on the provided
      * field, its {@link ResourceKey#value() value} will be used as key, otherwise,
      * the field's name is returned.
-     * 
+     *
      * @param field The field for which to retrieved the resource key.
      * @return The key to use for resource look up.
      */
