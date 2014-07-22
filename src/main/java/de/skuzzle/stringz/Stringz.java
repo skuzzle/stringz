@@ -32,24 +32,26 @@ import de.skuzzle.stringz.strategy.Strategies;
  * Provides automatic mapping from {@link ResourceBundle ResourceBundles} to
  * public variables of a class based on their names. Those classes are called
  * <em>Message classes</em> and must be marked with the {@link ResourceMapping}
- * annotation. Before using stringz, you should be aware of how ResourceBundles work
- * (<a href="http://docs.oracle.com/javase/tutorial/i18n/resbundle/index.html">See the
- * Oracle Online Trail about Resource Bundles</a>).
+ * annotation. Before using stringz, you should be aware of how ResourceBundles
+ * work (<a
+ * href="http://docs.oracle.com/javase/tutorial/i18n/resbundle/index.html">See
+ * the Oracle Online Trail about Resource Bundles</a>).
  *
  * <p>
  * Stringz uses default Java properties Resource Bundles in which externalized
  * Strings can be stored. The {@link #init(Class, Locale) init} method will then
  * try to map all public static String fields of a provided class to an entry of
- * a ResourceBundle which belongs to that class. A simple message class looks like this:
+ * a ResourceBundle which belongs to that class. A simple message class looks
+ * like this:
  * </p>
  *
  * <pre>
- * &#64;ResourceMapping
+ * &#064;ResourceMapping
  * public class MSG {
  *     static {
  *         Stringz.init(MSG.class);
  *     }
- *
+ * 
  *     public static String resourceKey;
  *     public static String resourceKey1;
  *     public static String resourceKeyX;
@@ -57,10 +59,11 @@ import de.skuzzle.stringz.strategy.Strategies;
  * }
  * </pre>
  *
- * <p>This approach to access externalized Strings has multiple advantages over the
+ * <p>
+ * This approach to access externalized Strings has multiple advantages over the
  * standard approach using <tt>bundle.getString("resourceKey")</tt>:
  * <ul>
- *   <li>Overhead of writing code which uses externalized Strings is minimized.
+ * <li>Overhead of writing code which uses externalized Strings is minimized.
  * Instead of having to write code like
  *
  * <pre>
@@ -85,51 +88,62 @@ import de.skuzzle.stringz.strategy.Strategies;
  * </ul>
  *
  * <h2>ResourceBundle Lookup</h2>
- * <p>Stringz provides two stages of customizing the resource bundle look up process.
- * The first stage is about resolving the base name of a resource bundle which should be
- * mapped to a message class. To simplify the specification of the base name, the default
- * behavior is to use the full qualified name of the message class itself.
- * If your message class is <tt>com.you.domain.MSG</tt>, Stringz will use exactly that
- * String as base name to find <tt>MSG.properties, MSG_En.properties</tt>, etc. within
- * the same package of that class.</p>
+ * <p>
+ * Stringz provides two stages of customizing the resource bundle look up
+ * process. The first stage is about resolving the base name of a resource
+ * bundle which should be mapped to a message class. To simplify the
+ * specification of the base name, the default behavior is to use the full
+ * qualified name of the message class itself. If your message class is
+ * <tt>com.you.domain.MSG</tt>, Stringz will use exactly that String as base
+ * name to find <tt>MSG.properties, MSG_En.properties</tt>, etc. within the same
+ * package of that class.
+ * </p>
  *
- * <p>If this behavior does not suit your needs, there are several ways of customizing
- * the base name used for a message class. First, there are two ways two explicitly
- * specify a base name:</p>
+ * <p>
+ * If this behavior does not suit your needs, there are several ways of
+ * customizing the base name used for a message class. First, there are two ways
+ * two explicitly specify a base name:
+ * </p>
  * <ol>
- *   <li>Define the field <tt>public final static String BUNDLE_FAMILY</tt> in your
- *       message class. Then, the value of that field will be used as base name.
- *   </li>
- *   <li>The preferred way is to specify the base name directly within the
- *       {@link ResourceMapping} annotation (e.g.
- *       <tt>&#64;ResourceMapping("com.your.domain.BaseName")</tt>)
- *   </li>
+ * <li>Define the field <tt>public final static String BUNDLE_FAMILY</tt> in
+ * your message class. Then, the value of that field will be used as base name.</li>
+ * <li>The preferred way is to specify the base name directly within the
+ * {@link ResourceMapping} annotation (e.g.
+ * <tt>&#64;ResourceMapping("com.your.domain.BaseName")</tt>)</li>
  * </ol>
- * <p>Furthermore, you may {@link #registerLocator(BundleFamilyLocator) register} a
- * {@link BundleFamilyLocator} locator with the <tt>Stringz</tt> class and specify the
- * locator to use on your message class using the {@link FamilyLocator} annotation. Here
- * is a sample <tt>BundleFamilyLocator</tt>:</p>
+ * <p>
+ * Furthermore, you may {@link #registerLocator(BundleFamilyLocator) register} a
+ * {@link BundleFamilyLocator} locator with the <tt>Stringz</tt> class and
+ * specify the locator to use on your message class using the
+ * {@link FamilyLocator} annotation. Here is a sample
+ * <tt>BundleFamilyLocator</tt>:
+ * </p>
  *
  * <pre>
  * public class StaticFamilyLocator implements BundleFamilyLocator {
- *     &#64;Override
+ *     &#064;Override
  *     public String locateBundleFamily(Class&lt;?&gt; msg) {
- *         return "com.your.domain.SomeBaseName";
+ *         return &quot;com.your.domain.SomeBaseName&quot;;
  *     }
  * }
  * </pre>
  *
- * <p>Register the locator with the <tt>Stringz</tt> class:</p>
+ * <p>
+ * Register the locator with the <tt>Stringz</tt> class:
+ * </p>
  *
  * <pre>
  * Stringz.registerLocator(new StaticFamilyLocator());
  * </pre>
  *
- * <p>Specify the locator to use on your message class:</p>
+ * <p>
+ * Specify the locator to use on your message class:
+ * </p>
  *
  * <pre>
- * &#64;ResourceMapping   // important: leave value() attribute empty
- * &#64;FamilyLocator(StaticFamilyLocator.class)
+ * &#064;ResourceMapping
+ * // important: leave value() attribute empty
+ * &#064;FamilyLocator(StaticFamilyLocator.class)
  * public class MSG {
  *     static {
  *         Stringz.init(MSG.class);
@@ -138,30 +152,37 @@ import de.skuzzle.stringz.strategy.Strategies;
  * }
  * </pre>
  *
- * <p>The second stage of bundle look up customization is about the
- * {@link java.util.ResourceBundle.Control Control} instance which is used to create the
- * ResourceBundle for your message class. By default, Stringz uses a <tt>Control</tt>
- * implementation which uses the {@link ResourceMapping#encoding() charset} specified in
- * the ResourceMapping and creates a {@link java.util.PropertyResourceBundle}. If you
- * want to supply a custom <tt>Control</tt> implementation, you can mark your message
- * class with the {@link ResourceControl}. This annotation specifies a
+ * <p>
+ * The second stage of bundle look up customization is about the
+ * {@link java.util.ResourceBundle.Control Control} instance which is used to
+ * create the ResourceBundle for your message class. By default, Stringz uses a
+ * <tt>Control</tt> implementation which uses the
+ * {@link ResourceMapping#encoding() charset} specified in the ResourceMapping
+ * and creates a {@link java.util.PropertyResourceBundle}. If you want to supply
+ * a custom <tt>Control</tt> implementation, you can mark your message class
+ * with the {@link ResourceControl}. This annotation specifies a
  * {@link ControlFactory} class which can be used to create a <tt>Control</tt>
- * instance which suits your needs. Below is an example usage. First, create your
- * <tt>ControlFactory</tt> class:</p>
+ * instance which suits your needs. Below is an example usage. First, create
+ * your <tt>ControlFactory</tt> class:
+ * </p>
+ * 
  * <pre>
  * public class MyControlFactory implements ControlFactory {
- *     &#64;Override
+ *     &#064;Override
  *     public Control create(ResourceMapping mapping, String[] args) {
  *         final String encoding = mapping.encoding();
  *         return new YourControlImplementation(encoding);
  *     }
  * }
  * </pre>
- * <p>Now, specify that this factory should be used to read the <tt>ResourceBundle</tt>
- * for your message class:</p>
+ * <p>
+ * Now, specify that this factory should be used to read the
+ * <tt>ResourceBundle</tt> for your message class:
+ * </p>
+ * 
  * <pre>
- * &#64;ResourceMapping(value = "com.your.domain.BaseName", encoding = "iso-8859")
- * &#64;ResourceControl(MyControlFactory.class)
+ * &#064;ResourceMapping(value = &quot;com.your.domain.BaseName&quot;, encoding = &quot;iso-8859&quot;)
+ * &#064;ResourceControl(MyControlFactory.class)
  * public class MSG {
  *     static {
  *         Stringz.init(MSG.class);
@@ -169,53 +190,71 @@ import de.skuzzle.stringz.strategy.Strategies;
  *     // ..
  * }
  * </pre>
- * <p>Stringz will create an instance of <tt>MyControlFactory</tt> and will then call
- * its {@link ControlFactory#create(ResourceMapping, String[]) configure} method
- * to obtain a <tt>Control</tt> instance.</p>
+ * <p>
+ * Stringz will create an instance of <tt>MyControlFactory</tt> and will then
+ * call its {@link ControlFactory#create(ResourceMapping, String[]) configure}
+ * method to obtain a <tt>Control</tt> instance.
+ * </p>
  *
  * <h2>Field Mapping</h2>
- * <p>By default, {@link Stringz} iterates all public static String fields of a class and
- * tries to assign each variable the value from the resource bundle stored with the name
- * of that variable. If you want a variable to be mapped to an explicitly different
- * resource, you can specify an alternate key to use for look up with
- * {@link ResourceKey} annotation. If you do not want a field to be mapped to a resource
- * value, you can mark it with {@link NoResource}.</p>
+ * <p>
+ * By default, {@link Stringz} iterates all public static String fields of a
+ * class and tries to assign each variable the value from the resource bundle
+ * stored with the name of that variable. If you want a variable to be mapped to
+ * an explicitly different resource, you can specify an alternate key to use for
+ * look up with {@link ResourceKey} annotation. If you do not want a field to be
+ * mapped to a resource value, you can mark it with {@link NoResource}.
+ * </p>
  *
- * <p>Besides simple Strings, String arrays are also supported. If Stringz finds a public
- * static String[] variable, it tries to split the respective resource value using a
- * {@link DefaultFieldMapper#getDefaultDelimiter() default} delimiter. You can also
- * specify an explicit delimiter pattern using {@link Delimiter} annotation. Finally, you
- * can construct array resources from multiple other resources using
- * {@link ResourceCollection}:</p>
+ * <p>
+ * Besides simple Strings, String arrays are also supported. If Stringz finds a
+ * public static String[] variable, it tries to split the respective resource
+ * value using a {@link DefaultFieldMapper#getDefaultDelimiter() default}
+ * delimiter. You can also specify an explicit delimiter pattern using
+ * {@link Delimiter} annotation. Finally, you can construct array resources from
+ * multiple other resources using {@link ResourceCollection}:
+ * </p>
+ * 
  * <pre>
- * &#64;ResourceCollection({"keyOfOtherResource", "keyOfSecondOtherResource"})
+ * &#064;ResourceCollection({ &quot;keyOfOtherResource&quot;, &quot;keyOfSecondOtherResource&quot; })
  * public static String[] customArray;
  * </pre>
- * <p>In this case, the array's name will be ignored for resource look up but an array
- * from the specified resource names will be created.</p>
+ * <p>
+ * In this case, the array's name will be ignored for resource look up but an
+ * array from the specified resource names will be created.
+ * </p>
  *
- * <p>The whole field mapping process can be customized in the same way in which you can
- * customize the resource look up process as described above. Here you would need
- * a {@link FieldMapper} and a {@link FieldMapperFactory} to supply custom behavior. The
- * default implementation can be found in {@link DefaultFieldMapper}.</p>
+ * <p>
+ * The whole field mapping process can be customized in the same way in which
+ * you can customize the resource look up process as described above. Here you
+ * would need a {@link FieldMapper} and a {@link FieldMapperFactory} to supply
+ * custom behavior. The default implementation can be found in
+ * {@link DefaultFieldMapper}.
+ * </p>
  *
  * <h2>Extended ResourceBundle Features</h2>
- * <p>Stringz allows you to use normal <tt>property</tt> files to define
- * externalized Strings but it offers some advanced features over normal
- * java property files.</p>
+ * <p>
+ * Stringz allows you to use normal <tt>property</tt> files to define
+ * externalized Strings but it offers some advanced features over normal java
+ * property files.
+ * </p>
  *
  * <h3>Key References</h3>
- * <p>Within a mapping pair, you can refer to any other key within the scope of
- * your properties file. For example:</p>
+ * <p>
+ * Within a mapping pair, you can refer to any other key within the scope of
+ * your properties file. For example:
+ * </p>
  *
  * <pre>
  * userName = Username
  * promptUserName = Please insert your ${userName}
  * </pre>
  *
- * <p>Accessing the resource with name <tt>promptUserName</tt> will yield the
+ * <p>
+ * Accessing the resource with name <tt>promptUserName</tt> will yield the
  * String <tt>Please insert your Username</tt>. These key references are also
- * applied transitively:</p>
+ * applied transitively:
+ * </p>
  *
  * <pre>
  * userName = Username
@@ -223,25 +262,32 @@ import de.skuzzle.stringz.strategy.Strategies;
  * promptPassword = ${promptUserName} and password
  * </pre>
  *
- * <p>Here, the resource with name <tt>promptPassword</tt> would resolve to the
- * String <tt>Please insert your Username and password</tt>.</p>
+ * <p>
+ * Here, the resource with name <tt>promptPassword</tt> would resolve to the
+ * String <tt>Please insert your Username and password</tt>.
+ * </p>
  *
  * <h3>Inclusion of Other Bundles</h3>
- * <p>Properties files used by the <tt>Stringz</tt> class can also have a special key
- * mapping named <tt>&#64;include</tt> which expects a semicolon separated list
- * of other ResourceBundle baseNames to include into the scope of the current
- * file. This will make all mappings of the included bundles visible for key
- * references as described above.</p>
+ * <p>
+ * Properties files used by the <tt>Stringz</tt> class can also have a special
+ * key mapping named <tt>&#64;include</tt> which expects a semicolon separated
+ * list of other ResourceBundle baseNames to include into the scope of the
+ * current file. This will make all mappings of the included bundles visible for
+ * key references as described above.
+ * </p>
  *
  * <pre>
  * &#64;include = com.your.domain.CommonNames;
  * key = ${referenceToKeyFromIncludedBundle}
  * </pre>
  *
- * <p>Included key/value pairs will also be mapped to the String variables of your message
- * class.</p>
+ * <p>
+ * Included key/value pairs will also be mapped to the String variables of your
+ * message class.
+ * </p>
  *
  * @author Simon Taddiken
+ * @version 0.2.0
  */
 public final class Stringz {
 
@@ -456,6 +502,47 @@ public final class Stringz {
      */
     public static void init(Class<?> cls) {
         init(cls, Stringz.locale);
+    }
+
+    /**
+     * Resets all mapped fields of the provided message class to
+     * <code>null</code>. All fields which are accepted by the
+     * {@link FieldMapper} which belongs to the provided message class will be
+     * set to <code>null</code> and the class will be removed from this class'
+     * cache of initialized message classes. If the locale changes, a disposed
+     * class will not be reinitialized.
+     *
+     * @param cls The message class to dispose
+     * @throws IllegalArgumentException If <tt>cls</tt> is <code>null</code> or
+     *             it is not annotated with {@link ResourceMapping}.
+     * @throws FieldMapperException If resetting a field fails for any reason.
+     * @since 0.2.0
+     */
+    public static void dispose(Class<?> cls) {
+        if (cls == null) {
+            throw new IllegalArgumentException("cls is null");
+        } else if (!cls.isAnnotationPresent(ResourceMapping.class)) {
+            throw new IllegalArgumentException(String.format(
+                    "Class %s does not specify a ResourceMapping annotation", cls));
+        } else {
+            synchronized (initialized) {
+                if (!initialized.remove(cls)) {
+                    return;
+                }
+            }
+        }
+
+        final ResourceMapping mapping = cls.getAnnotation(ResourceMapping.class);
+        final FieldMapper mapper = findFieldMapper(cls, mapping);
+        Arrays.stream(cls.getFields())
+                .filter(mapper::accept)
+                .forEach(field -> {
+                    try {
+                        field.set(null, null);
+                    } catch (Exception e) {
+                        throw new FieldMapperException(e);
+                    }
+                });
     }
 
     /**
