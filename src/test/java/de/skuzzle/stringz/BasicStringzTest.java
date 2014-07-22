@@ -12,6 +12,7 @@ public class BasicStringzTest {
     public void setup() {
         Locale.setDefault(Locale.ROOT);
         Stringz.setLocale(Locale.ROOT);
+        Stringz.init(MSG.class); // necessary for the dispose test
     }
 
     @Test
@@ -36,16 +37,16 @@ public class BasicStringzTest {
         final String[] expected = { "Multiple", "values", "delimited", "by", "semicolon" };
         Assert.assertArrayEquals(expected, MSG.commaDelimited);
     }
-    
+
     @Test
     public void testDelimiterWithResourceKey() {
         final String[] expected = { "Multiple", "values", "delimited", "by", "semicolon" };
         Assert.assertArrayEquals(expected, MSG.customMapping);
     }
-    
+
     @Test
     public void testResourceCollection() {
-        final String[] expected = 
+        final String[] expected =
             {"Some value", "A String with a Reference to 'Some value'" };
         Assert.assertArrayEquals(expected, MSG.customMapping2);
     }
@@ -132,5 +133,11 @@ public class BasicStringzTest {
                 MSGWithCustomLocator.testKey4);
         Assert.assertEquals("reference at the end Some value",
                 MSGWithCustomLocator.testKey5);
+    }
+
+    @Test
+    public void testDispose() {
+        Stringz.dispose(MSG.class);
+        Assert.assertNull(MSG.testKey1);
     }
 }
