@@ -396,6 +396,39 @@ public final class Stringz {
         }
     }
 
+    /**
+     * Enables or disables caching of resource bundles. Caching is useful to
+     * prevent loading the same bundle multiple times if it is included from
+     * other bundles.
+     *
+     * @param enabled If <code>true</code>, caching will be enabled, if
+     *            <code>false</code>, caching will be disabled and all currently
+     *            cached bundles will be disposed.
+     * @see #isBundleCaching()
+     * @since 0.2.0
+     */
+    public static void setBundleCaching(boolean enabled) {
+        ExtendedBundle.ENABLE_CACHE = enabled;
+        if (!enabled) {
+            synchronized (ExtendedBundle.cache) {
+                ExtendedBundle.cache.clear();
+            }
+        }
+    }
+
+    /**
+     * Whether {@link ResourceBundle} caching is enabled. If it is, bundles
+     * which are included within multiple other bundles will be held in memory
+     * and do not have to be reloaded from their location.
+     *
+     * @return Whether bundle caching is enabled.
+     * @see #setBundleCaching(boolean)
+     * @since 0.2.0
+     */
+    public static boolean isBundleCaching() {
+        return ExtendedBundle.ENABLE_CACHE;
+    }
+
     /** Not instantiatable (is this even a word?) */
     private Stringz() {}
 

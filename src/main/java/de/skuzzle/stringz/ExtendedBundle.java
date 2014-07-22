@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 /**
  * ResourceBundle implementation that decorates another ResourceBundle and provides
  * inheritance of multiple specified bundles and key substitution.
- * 
+ *
  * @author Simon Taddiken
  */
 class ExtendedBundle extends ResourceBundle {
@@ -43,22 +43,38 @@ class ExtendedBundle extends ResourceBundle {
     }
 
     private final static String INCLUDE_KEY = "@include";
-    private final static Map<CacheKey, ResourceBundle> cache = new HashMap<>();
+
+    /**
+     * Whether to enable bundle caching. Field can be modified from the
+     * {@link Stringz} class.
+     */
+    static volatile boolean ENABLE_CACHE = true;
+
+    /**
+     * Cache for already loaded resource bundles. Might be cleared by the
+     * {@link Stringz} class.
+     */
+    final static Map<CacheKey, ResourceBundle> cache = new HashMap<>();
 
     public static ResourceBundle getBundle(String baseName,
             Locale targetLocale, ClassLoader loader, Control control) {
-        final CacheKey cacheKey = new CacheKey(baseName, targetLocale);
 
-        synchronized (cache) {
-            final ResourceBundle cached = cache.get(cacheKey);
-            if (cached != null) {
-                return cached;
+        final CacheKey cacheKey = new CacheKey(baseName, targetLocale);
+        if (ENABLE_CACHE) {
+            synchronized (cache) {
+                final ResourceBundle cached = cache.get(cacheKey);
+                if (cached != null) {
+                    return cached;
+                }
             }
         }
         final ResourceBundle bundle = ResourceBundle.getBundle(baseName,
                 targetLocale, loader, control);
+
+        if (ENABLE_CACHE) {
         synchronized (cache) {
-            cache.put(cacheKey, bundle);
+                cache.put(cacheKey, bundle);
+            }
         }
         return new ExtendedBundle(bundle, baseName, targetLocale, control);
     }
