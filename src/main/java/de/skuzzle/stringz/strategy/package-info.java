@@ -1,25 +1,25 @@
 /**
- * Contains interfaces to customize the way in which 
- * {@link de.skuzzle.stringz.Stringz Stringz} looks up 
+ * Contains interfaces to customize the way in which
+ * {@link de.skuzzle.stringz.Stringz Stringz} looks up
  * {@link java.util.ResourceBundle ResourceBundles} and how it maps fields to resources.
  * Except for the {@link de.skuzzle.stringz.strategy.BundleFamilyLocator BundleFamilyLocator},
  * the general pattern of customization is:
  * <ul>
- *  <li>Create an implementation of the desired strategy, e.g. implement 
+ *  <li>Create an implementation of the desired strategy, e.g. implement
  *      {@link de.skuzzle.stringz.strategy.FieldMapper FieldMapper} to specify a custom
- *      field mapping behavior. 
- *  <li>Create a <em>YourStrategy</em>Factory implementation with a no arguments 
- *      public constructor. Make its <tt>configureXX</tt> method return an instance of 
+ *      field mapping behavior.
+ *  <li>Create a <em>YourStrategy</em>Factory implementation with a no arguments
+ *      public constructor. Make its <tt>create</tt> method return an instance of
  *      your strategy implementation.</li>
- *  <li>Mark your message class with the respective annotation to specify the factory. 
- *      In case of the 
+ *  <li>Mark your message class with the respective annotation to specify the factory.
+ *      In case of the
  *      {@link de.skuzzle.stringz.strategy.FieldMapperFactory FieldMapperFactory},
  *      use the {@link de.skuzzle.stringz.annotation.FieldMapping FieldMapping} annotation
  *      to specify the Class of your factory.
  *      </li>
  * </ul>
- * 
- * <p>This shows the available strategies and their corresponding factorys and 
+ *
+ * <p>This shows the available strategies and their corresponding factorys and
  * annotations:</p>
  * <table summary="Available strategies">
  * <tr>
@@ -41,41 +41,41 @@
  *     <td>{@link de.skuzzle.stringz.annotation.FamilyLocator &#64;FamilyLocator}</td>
  * </tr>
  * </table>
- * 
+ *
  * <h2>Strategy Usage of Stringz</h2>
- * <p>The {@link de.skuzzle.stringz.Stringz Stringz} class makes use of all these 
+ * <p>The {@link de.skuzzle.stringz.Stringz Stringz} class makes use of all these
  * strategies when initializing a message class. The exact way in which the strategies
  * are used is defined using a {@link de.skuzzle.stringz.strategy.Strategies Strategies}
  * instance. E.g. the default behavior is to cache all created factory classes. If
- * you do not like the caching behavior, you could 
+ * you do not like the caching behavior, you could
  * {@link de.skuzzle.stringz.Stringz#setStrategies(Strategies) switch} the strategy
- * to e.g. {@link de.skuzzle.stringz.SimpleStrategies SimpleStrategies} or an own 
+ * to e.g. {@link de.skuzzle.stringz.SimpleStrategies SimpleStrategies} or an own
  * implementation.
- * 
+ *
  * <h2>Sample Strategy implementation</h2>
- * <p>Below follows a typical example strategy definition for a field mapper. Start with 
+ * <p>Below follows a typical example strategy definition for a field mapper. Start with
  * the <tt>FieldMapper</tt> implementation:</p>
  * <pre>
  * public class PatternFieldMapper extends DefaultFieldMapper {
- * 
+ *
  *     private final Pattern pattern;
- *     
+ *
  *     public PatternFieldMapper(Pattern pattern) {
  *         this.pattern = pattern;
  *     }
- * 
+ *
  *     &#64;Override
  *     public boolean accept(Field field) {
  *         return super.accept(field) &amp;&amp; this.pattern.matcher(field.getName()).matches();
  *     }
  * }
  * </pre>
- * 
+ *
  * Create the Factory:
- * 
+ *
  * <pre>
  * public class PatternFieldMapperFactory implements FieldMapperFactory {
- * 
+ *
  *     &#64;Override
  *     public FieldMapper create(ResourceMapping mapping, String[] args) {
  *         if (args.length != 1) {
@@ -91,9 +91,9 @@
  *     }
  * }
  * </pre>
- * 
+ *
  * Now mark your message class to use the new factory:
- * 
+ *
  * <pre>
  * &#64;ResourceMapping
  * &#64;FieldMapping(value = PatternFieldMapperFactory.class, args = { "prefix.*" })
@@ -101,7 +101,7 @@
  *     static {
  *         Stringz.init(MSG.class);
  *     }
- *     
+ *
  *     // ...
  * }
  * </pre>
