@@ -15,7 +15,7 @@ import java.util.ResourceBundle.Control;
 /**
  * Simple {@link Control} instance which creates a {@link PropertyResourceBundle} that is
  * read using a specified encoding.
- * 
+ *
  * @author Simon Taddiken
  */
 public class CharsetBundleControl extends Control {
@@ -25,7 +25,7 @@ public class CharsetBundleControl extends Control {
 
     /**
      * Creates a new CharsetBundleControl.
-     * 
+     *
      * @param charset Name of the charset to use.
      * @throws IllegalArgumentException If <tt>charset</tt> is <code>null</code>
      */
@@ -38,7 +38,7 @@ public class CharsetBundleControl extends Control {
 
     /**
      * Creates a new CharsetBundleControl.
-     * 
+     *
      * @param charset The charset to use.
      * @throws IllegalArgumentException If <tt>charset</tt> is <code>null</code>
      */
@@ -50,8 +50,13 @@ public class CharsetBundleControl extends Control {
     }
 
     @Override
-    public ResourceBundle newBundle(String baseName, Locale locale, String format, 
-            ClassLoader loader, boolean reload) 
+    public long getTimeToLive(String baseName, Locale locale) {
+        return TTL_DONT_CACHE;
+    }
+
+    @Override
+    public ResourceBundle newBundle(String baseName, Locale locale, String format,
+            ClassLoader loader, boolean reload)
                     throws IllegalAccessException, InstantiationException, IOException {
         // The below is a copy of the default implementation.
         final String bundleName = toBundleName(baseName, locale);
@@ -73,7 +78,7 @@ public class CharsetBundleControl extends Control {
         if (stream != null) {
             try {
                 bundle = new PropertyResourceBundle(
-                        new InputStreamReader(stream, this.charset)); //$NON-NLS-1$
+                        new InputStreamReader(stream, this.charset));
             } finally {
                 stream.close();
             }
