@@ -50,11 +50,6 @@ public class CharsetBundleControl extends Control {
     }
 
     @Override
-    public long getTimeToLive(String baseName, Locale locale) {
-        return TTL_DONT_CACHE;
-    }
-
-    @Override
     public ResourceBundle newBundle(String baseName, Locale locale, String format,
             ClassLoader loader, boolean reload)
                     throws IllegalAccessException, InstantiationException, IOException {

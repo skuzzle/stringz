@@ -24,14 +24,6 @@ import de.skuzzle.stringz.annotation.ResourceMapping;
  * getBundle} method.
  * </p>
  *
- * <p>
- * <em>Implementation Note:</em> If you implement a custom Control to use with
- * {@link Stringz}, you should override its
- * {@link Control#getTimeToLive(String, java.util.Locale) getTimeToLive} method
- * to return {@link Control#TTL_DONT_CACHE}, as Stringz uses an own caching
- * strategy.
- * </p>
- *
  * @author Simon Taddiken
  */
 public interface ControlFactory {

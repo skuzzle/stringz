@@ -2,12 +2,9 @@ package de.skuzzle.stringz;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.MissingResourceException;
-import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
@@ -21,61 +18,13 @@ import java.util.regex.Pattern;
  */
 class ExtendedBundle extends ResourceBundle {
 
-    private final static class CacheKey {
-        private final String baseName;
-        private final Locale locale;
-
-        public CacheKey(String baseName, Locale locale) {
-            this.baseName = baseName;
-            this.locale = locale;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(this.baseName, this.locale);
-        }
-
-        @Override
-        public String toString() {
-            return String.format("baseName=%s, locale=%s", this.baseName,
-                    this.locale);
-        }
-    }
-
     private final static String INCLUDE_KEY = "@include";
-
-    /**
-     * Whether to enable bundle caching. Field can be modified from the
-     * {@link Stringz} class.
-     */
-    static volatile boolean ENABLE_CACHE = true;
-
-    /**
-     * Cache for already loaded resource bundles. Might be cleared by the
-     * {@link Stringz} class.
-     */
-    final static Map<CacheKey, ResourceBundle> cache = new HashMap<>();
 
     public static ResourceBundle getBundle(String baseName,
             Locale targetLocale, ClassLoader loader, Control control) {
 
-        final CacheKey cacheKey = new CacheKey(baseName, targetLocale);
-        if (ENABLE_CACHE) {
-            synchronized (cache) {
-                final ResourceBundle cached = cache.get(cacheKey);
-                if (cached != null) {
-                    return cached;
-                }
-            }
-        }
         final ResourceBundle bundle = ResourceBundle.getBundle(baseName,
                 targetLocale, loader, control);
-
-        if (ENABLE_CACHE) {
-        synchronized (cache) {
-                cache.put(cacheKey, bundle);
-            }
-        }
         return new ExtendedBundle(bundle, baseName, targetLocale, control);
     }
 
