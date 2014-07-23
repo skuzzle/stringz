@@ -72,7 +72,7 @@ This is a properties file named `MSG_De.properties` within the same package:
 
 ```
 next = Weiter
-back = Zur�ck
+back = Zurück
 cancel = Abbrechen
 ```
 
