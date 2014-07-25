@@ -1,5 +1,6 @@
 package de.skuzzle.stringz;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -545,6 +546,39 @@ public final class Stringz {
                         throw new FieldMapperException(e);
                     }
                 });
+    }
+
+    /**
+     * Provides map-like access to the value of a resource key. This method uses
+     * reflection to figure out the value of <tt>field</tt> within the provided
+     * class <tt>msg</tt>. The field must be static and declared as String.
+     *
+     * @param msg The class in which the field's value should be read.
+     * @param field The field which value should be read.
+     * @return The String value which is assigned to the field. If the field
+     *         does not exists or is not a String, null is returned.
+     * @since 0.2.0
+     */
+    public static String get(Class<?> msg, String field) {
+        try {
+            final Field f = msg.getField(field);
+            if (!Modifier.isStatic(f.getModifiers())) {
+                throw new IllegalArgumentException(String.format(
+                        "Field '%s' is not static", field));
+            } else if (f.getType() != String.class) {
+                return null;
+            }
+            return (String) f.get(null);
+        } catch (NoSuchFieldException e) {
+            return null;
+        } catch (SecurityException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IllegalArgumentException e) {
+            return null;
+        } catch (IllegalAccessException e) {
+            return null;
+        }
     }
 
     /**
