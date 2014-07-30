@@ -56,6 +56,7 @@ public class MSG {
     public static String next;
     public static String back;
     public static String cancel;
+}
 ```
 
 The following is a properties file named `MSG.properties` contained in the same
