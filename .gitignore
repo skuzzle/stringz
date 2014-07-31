@@ -13,4 +13,5 @@ hs_err_pid*
 .classpath
 .project
 /target
-*.eclipse.jdt.core.prefs
+*.prefs
+
