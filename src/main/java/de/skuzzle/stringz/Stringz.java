@@ -556,7 +556,7 @@ public final class Stringz {
      * @param msg The class in which the field's value should be read.
      * @param field The field which value should be read.
      * @return The String value which is assigned to the field. If the field
-     *         does not exists or is not a String, null is returned.
+     *         does not exist or is not a String, <code>null</code> is returned.
      * @since 0.2.0
      */
     public static String get(Class<?> msg, String field) {
