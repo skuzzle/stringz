@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
  * <p>
  * Maps a so called <em>Message Class</em> to a {@link java.util.ResourceBundle}
  * . A Message class can be any Java class that contains
- * <tt>public static String</tt> fields which should be mapped to a
+ * {@code public static String} fields which should be mapped to a
  * corresponding entry within a {@link java.util.ResourceBundle} using their
  * name. Normally, you would create a dedicated class which only holds those
  * static String variables but it is also possible to
@@ -20,7 +20,7 @@ import java.lang.annotation.Target;
  * <p>
  * This annotation provides the information that are needed in order to look up
  * the ResourceBundle from which the mappings are loaded. The {@link #value()}
- * field specifies the <tt>baseName</tt> in terms of
+ * field specifies the {@code baseName} in terms of
  * {@link java.util.ResourceBundle#getBundle(String)}. This property defaults to
  * the empty String. If you do not explicitly specify a base name, a custom look
  * up procedure is applied by the {@link de.skuzzle.stringz.Stringz Stringz}
@@ -98,8 +98,8 @@ import java.lang.annotation.Target;
  * static String fields will be initialized with a corresponding String from the
  * ResourceBundle. If you have static String fields in your class which should
  * not be mapped to a resource, you can mark them with the {@link NoResource}
- * annotation. Otherwise, if <tt>Stringz</tt> encounters a public String field
- * for which no key exists in the specified <tt>ResourceBundle</tt>, a
+ * annotation. Otherwise, if {@code Stringz} encounters a public String field
+ * for which no key exists in the specified {@code ResourceBundle}, a
  * {@link java.util.MissingResourceException} will be thrown upon initializing.
  *
  * @author Simon Taddiken

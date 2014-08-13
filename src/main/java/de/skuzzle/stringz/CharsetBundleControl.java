@@ -27,7 +27,7 @@ public class CharsetBundleControl extends Control {
      * Creates a new CharsetBundleControl.
      *
      * @param charset Name of the charset to use.
-     * @throws IllegalArgumentException If <tt>charset</tt> is <code>null</code>
+     * @throws IllegalArgumentException If {@code charset} is <code>null</code>
      */
     public CharsetBundleControl(String charset) {
         if (charset == null) {
@@ -40,7 +40,7 @@ public class CharsetBundleControl extends Control {
      * Creates a new CharsetBundleControl.
      *
      * @param charset The charset to use.
-     * @throws IllegalArgumentException If <tt>charset</tt> is <code>null</code>
+     * @throws IllegalArgumentException If {@code charset} is <code>null</code>
      */
     public CharsetBundleControl(Charset charset) {
         if (charset == null) {

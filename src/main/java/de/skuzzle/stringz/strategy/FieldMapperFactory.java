@@ -30,7 +30,7 @@ public interface FieldMapperFactory {
      * @param mapping The ResourceMapping annotation of the message class
      * @param args Additional arguments from the {@link FieldMapping#args()} attribute.
      * @return The FieldMapper instance for this message class.
-     * @throws FieldMapperException If invalid <tt>args</tt> have been provided.
+     * @throws FieldMapperException If invalid {@code args} have been provided.
      */
     public FieldMapper create(ResourceMapping mapping, String[] args) 
             throws FieldMapperException;

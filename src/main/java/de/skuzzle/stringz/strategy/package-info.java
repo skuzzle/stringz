@@ -9,7 +9,7 @@
  *      {@link de.skuzzle.stringz.strategy.FieldMapper FieldMapper} to specify a custom
  *      field mapping behavior.
  *  <li>Create a <em>YourStrategy</em>Factory implementation with a no arguments
- *      public constructor. Make its <tt>create</tt> method return an instance of
+ *      public constructor. Make its {@code create} method return an instance of
  *      your strategy implementation.</li>
  *  <li>Mark your message class with the respective annotation to specify the factory.
  *      In case of the
@@ -54,7 +54,7 @@
  *
  * <h2>Sample Strategy implementation</h2>
  * <p>Below follows a typical example strategy definition for a field mapper. Start with
- * the <tt>FieldMapper</tt> implementation:</p>
+ * the {@code FieldMapper} implementation:</p>
  * <pre>
  * public class PatternFieldMapper extends DefaultFieldMapper {
  *

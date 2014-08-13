@@ -13,7 +13,7 @@ import de.skuzzle.stringz.strategy.ControlFactory;
  * ControlFactory which creates a {@link CharsetBundleControl} using the charset 
  * provided with {@link ResourceMapping#encoding()}. This factory does not need to 
  * be specified on a message class using {@link ResourceControl}, because it will be used
- * as default when no other <tt>ResourceControl</tt> is given.
+ * as default when no other {@code ResourceControl} is given.
  * 
  * @author Simon Taddiken
  */
@@ -23,11 +23,11 @@ public class CharsetBundleControlFactory implements ControlFactory {
      * {@inheritDoc}
      * 
      * <p>This method will throw {@link ControlFactoryException} if the passed 
-     * <tt>args</tt> are not empty or if the charset specified at 
-     * <tt>mapping.encoding()</tt> is not valid.</p>
+     * {@code args} are not empty or if the charset specified at 
+     * {@code mapping.encoding()} is not valid.</p>
      * 
-     * @throws ControlFactoryException If <tt>args.length != 0</tt> or the charset 
-     *          provided at <tt>mapping.encoding()</tt> is not supported.
+     * @throws ControlFactoryException If {@code args.length != 0} or the charset 
+     *          provided at {@code mapping.encoding()} is not supported.
      */
     @Override
     public Control create(ResourceMapping mapping, String[] args) {

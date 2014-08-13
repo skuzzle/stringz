@@ -28,18 +28,18 @@ public interface Strategies {
      * <p>
      * It is meant to obtain a {@link ControlFactory} instance using the
      * {@link Class} value of the provided {@link ResourceControl#value()
-     * ResourceControl}, then use that <tt>ControlFactory's</tt>
+     * ResourceControl}, then use that {@code ControlFactory's}
      * {@link ControlFactory#create(ResourceMapping, String[]) create} method to
      * create a new {@link Control} instance.
      * </p>
      *
-     * @param rc The <tt>ResourceControl</tt> annotation of the target message
+     * @param rc The {@code ResourceControl} annotation of the target message
      *            class.
-     * @param mapping The <tt>ResourceMapping</tt> annotation of the target
+     * @param mapping The {@code ResourceMapping} annotation of the target
      *            message class.
-     * @return A Control instance for loading the <tt>ResourceBundle</tt> for
+     * @return A Control instance for loading the {@code ResourceBundle} for
      *         the target message class.
-     * @throws ControlFactoryException If creation of the <tt>Control</tt>
+     * @throws ControlFactoryException If creation of the {@code Control}
      *             instance fails for any reason.
      */
     public Control getControl(ResourceControl rc, ResourceMapping mapping)
@@ -53,18 +53,18 @@ public interface Strategies {
      * <p>
      * It is meant to obtain a {@link FieldMapperFactory} instance using the
      * {@link Class} value of the provided {@link FieldMapping#value()
-     * FieldMapping}, then use that <tt>FieldMapperFactory</tt>
+     * FieldMapping}, then use that {@code FieldMapperFactory}
      * {@link FieldMapperFactory#create(ResourceMapping, String[]) create}
      * method to create a new {@link FieldMapper} instance.
      * </p>
      *
-     * @param fm The <tt>FieldMapping</tt> annotation of the target message
+     * @param fm The {@code FieldMapping} annotation of the target message
      *            class.
-     * @param mapping The <tt>ResourceMapping</tt> annotation of the target
+     * @param mapping The {@code ResourceMapping} annotation of the target
      *            message class.
-     * @return A <tt>FieldMapper</tt> instance which should be used to map
+     * @return A {@code FieldMapper} instance which should be used to map
      *         fields of the target message class to resource values.
-     * @throws FieldMapperException If creation of the <tt>FieldMapper</tt>
+     * @throws FieldMapperException If creation of the {@code FieldMapper}
      *             instance fails for any reason.
      */
     public FieldMapper getFieldMapper(FieldMapping fm, ResourceMapping mapping)

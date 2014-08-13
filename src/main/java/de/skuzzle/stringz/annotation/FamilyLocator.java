@@ -13,7 +13,7 @@ import de.skuzzle.stringz.strategy.BundleFamilyLocator;
  * {@link BundleFamilyLocator} and supply an instance of that class to 
  * {@link de.skuzzle.stringz.Stringz#registerLocator(BundleFamilyLocator)}. Using this 
  * annotation, you can instruct stringz to use your new custom locator when initializing a 
- * <tt>Messages</tt> instance:
+ * {@code Messages} instance:
  * 
  * <pre>
  * &#64;ResourceMapping
@@ -29,7 +29,7 @@ import de.skuzzle.stringz.strategy.BundleFamilyLocator;
 public @interface FamilyLocator {
     /**
      * Defines the {@link BundleFamilyLocator} class to use when locating the bundle 
-     * family for a <tt>ResourceMapping</tt> class. A concrete implementation of the class
+     * family for a {@code ResourceMapping} class. A concrete implementation of the class
      * specified as value has to be registered with 
      * {@link de.skuzzle.stringz.Stringz#registerLocator(BundleFamilyLocator)}.
      * 

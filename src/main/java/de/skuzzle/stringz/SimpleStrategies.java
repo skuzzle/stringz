@@ -13,12 +13,12 @@ import de.skuzzle.stringz.strategy.Strategies;
 /**
  * This is the simplest possible implementation of the {@link Strategies}
  * interface. Each getter method will always instantiate a new instance of the
- * required <tt>Factory</tt> and will then use the Factory to create the desired
- * object. If you would like to cache <tt>Factory</tt> instances, use
+ * required {@code Factory} and will then use the Factory to create the desired
+ * object. If you would like to cache {@code Factory} instances, use
  * {@link CachedStrategies} instead.
  *
  * <p>
- * Call <tt>Stringz.setStrategies(new CachedStrategies())</tt> to use this
+ * Call {@code Stringz.setStrategies(new CachedStrategies())} to use this
  * implementation.
  * </p>
  *

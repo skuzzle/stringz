@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * Specifies the delimiter for a resource mapped array variable. This annotation
- * only has an effect on <tt>String[]</tt> variables.
+ * only has an effect on {@code String[]} variables.
  *
  * @author Simon Taddiken
  */

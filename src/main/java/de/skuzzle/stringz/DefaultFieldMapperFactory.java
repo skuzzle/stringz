@@ -16,7 +16,7 @@ public class DefaultFieldMapperFactory implements FieldMapperFactory {
      * {@inheritDoc}
      * 
      * @return A FieldMapper which implements the Stringz default field mapping behavior.
-     * @throws FieldMapperException If the <tt>args</tt> array is not empty.
+     * @throws FieldMapperException If the {@code args} array is not empty.
      */
     @Override
     public FieldMapper create(ResourceMapping mapping, String[] args)

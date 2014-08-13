@@ -18,11 +18,11 @@ import de.skuzzle.stringz.strategy.Strategies;
 
 /**
  * These strategies only instantiate every {@link ControlFactory} and
- * {@link FieldMapperFactory} once. When a <tt>Factory</tt> for the same class
+ * {@link FieldMapperFactory} once. When a {@code Factory} for the same class
  * is requested, the cached instance will be returned. If you require a simple,
  * non-caching implementation, use {@link SimpleStrategies} instead.
  *
- * <p>Call <tt>Stringz.setStrategies(new CachedStrategies()</tt> to use this
+ * <p>Call {@code Stringz.setStrategies(new CachedStrategies()} to use this
  * implementation.</p>
  *
  * @author Simon Taddiken
@@ -45,17 +45,17 @@ public class CachedStrategies implements Strategies {
     }
 
     /**
-     * This method returns an object T which is stored under the specified <tt>key</tt>
-     * in the provided <tt>cache</tt>. If no instance for T is cached, a new one will be
+     * This method returns an object T which is stored under the specified {@code key}
+     * in the provided {@code cache}. If no instance for T is cached, a new one will be
      * instantiated and stored.
      *
-     * <p>This method is synchronized on the passed <tt>cache</tt>.</p>
+     * <p>This method is synchronized on the passed {@code cache}.</p>
      *
      * @param <T> Type of values in the cache.
      * @param cache The cache to retrieve the instance from or to put a newly created
      *          instance in.
      * @param key The key of the object to retrieve.
-     * @return A cached instance of the class <tt>key</tt> which is optionally created
+     * @return A cached instance of the class {@code key} which is optionally created
      *          if none existed in the cache.
      * @throws InstantiationException If creation of a new instance of T failed.
      * @throws IllegalAccessException If creation of a new instance of T failed.

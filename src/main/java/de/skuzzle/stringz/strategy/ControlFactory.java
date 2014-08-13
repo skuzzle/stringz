@@ -37,7 +37,7 @@ public interface ControlFactory {
      *          {@link ResourceMapping#encoding() encoding} of the bundle to load.
      * @param args Additional arguments from the {@link ResourceControl#args()} attribute.
      * @return The Control for reading the ResourceBundle of a message class.
-     * @throws ControlFactoryException If invalid <tt>args</tt> have been provided.
+     * @throws ControlFactoryException If invalid {@code args} have been provided.
      */
     public Control create(ResourceMapping mapping, String[] args);
 }

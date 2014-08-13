@@ -24,7 +24,7 @@ public @interface ResourceControl {
      * Specifies the {@link ControlFactory} which will be used to create a 
      * {@link java.util.ResourceBundle.Control Control} instance. That instance will then
      * be used to locate and read a ResourceBundle for this class.
-     * @return The class of the <tt>ControlFactory</tt> to use.
+     * @return The class of the {@code ControlFactory} to use.
      */
     Class<? extends ControlFactory> value();
     
@@ -32,7 +32,7 @@ public @interface ResourceControl {
      * Defines optional arguments to be passed to 
      * {@link ControlFactory#create(ResourceMapping, String[])}. Defaults to an
      * empty array.
-     * @return Array of additional parameters for the <tt>ControlFactory</tt>
+     * @return Array of additional parameters for the {@code ControlFactory}
      */
     String[] args() default {};
 }

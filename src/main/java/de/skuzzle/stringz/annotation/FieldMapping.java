@@ -34,7 +34,7 @@ public @interface FieldMapping {
      * Defines optional arguments to be passed to 
      * {@link FieldMapperFactory#create(ResourceMapping, String[])}. Defaults to 
      * an empty array.
-     * @return Array of additional parameters for the <tt>FieldMapper</tt>
+     * @return Array of additional parameters for the {@code FieldMapper}
      */
     String[] args() default {};
 }

@@ -28,7 +28,7 @@ public class DefaultFieldMapper implements FieldMapper {
      * {@inheritDoc}
      * <p>
      * This method implements the default filtering of fields for
-     * <tt>Stringz</tt>. It will return <code>true</code> if, and only if the
+     * {@code Stringz}. It will return <code>true</code> if, and only if the
      * passed field
      * </p>
      * <ul>
@@ -50,11 +50,11 @@ public class DefaultFieldMapper implements FieldMapper {
      * {@inheritDoc}
      *
      * <p>
-     * Implements the default field assignment strategy for <tt>Stringz</tt>. If field
-     * has any other type than <tt>String</tt> or <tt>String[]</tt>, an exception will be
+     * Implements the default field assignment strategy for {@code Stringz}. If field
+     * has any other type than {@code String</tt> or <tt>String[]}, an exception will be
      * caused. The value for the field will be
      * retrieved using {@link ResourceBundle#getString(String)}. If the passed
-     * ResourceMapping's <tt>intern</tt> attribute is <code>true</code>,
+     * ResourceMapping's {@code intern} attribute is <code>true</code>,
      * {@link String#intern()} will be called before assigning the value to the
      * field.</p>
      *
@@ -116,7 +116,7 @@ public class DefaultFieldMapper implements FieldMapper {
 
     /**
      * Gets the delimiter pattern which will be used as default to split strings which
-     * will be assigned to <tt>public static String[]</tt> variables.
+     * will be assigned to {@code public static String[]} variables.
      *
      * @return The delimiter pattern.
      */
@@ -125,8 +125,8 @@ public class DefaultFieldMapper implements FieldMapper {
     }
 
     /**
-     * Gets a resource value for the provided <tt>key</tt> from the provided
-     * <tt>bundle</tt>. If the mapping's {@link ResourceMapping#intern() intern}
+     * Gets a resource value for the provided {@code key} from the provided
+     * {@code bundle}. If the mapping's {@link ResourceMapping#intern() intern}
      * attribute is <code>true</code>, then the retrieved resource value will be interned
      * in terms of {@link String#intern()}.
      *
@@ -134,7 +134,7 @@ public class DefaultFieldMapper implements FieldMapper {
      *          class
      * @param bundle The resolved {@link ResourceBundle} for that message class.
      * @param resourceKey The key of the resource value to retrieve.
-     * @return The resource value for the given <tt>key</tt>.
+     * @return The resource value for the given {@code key}.
      */
     protected String getValue(ResourceMapping mapping, ResourceBundle bundle,
             String resourceKey) {

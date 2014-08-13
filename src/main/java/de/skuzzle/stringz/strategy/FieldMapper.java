@@ -8,7 +8,7 @@ import de.skuzzle.stringz.Stringz;
 import de.skuzzle.stringz.annotation.ResourceMapping;
 
 /**
- * A <tt>FieldMapper</tt> can be used to customize the way in which fields of a class
+ * A {@code FieldMapper} can be used to customize the way in which fields of a class
  * are mapped to values from a {@link ResourceBundle}. The {@link #accept(Field)} method
  * is used to select the fields which should get a value assigned using
  * {@link #mapField(ResourceMapping, Field, ResourceBundle)}.
@@ -36,12 +36,12 @@ public interface FieldMapper {
      * @param mapping The {@link ResourceMapping} annotation of the message class which
      *          is currently processed.
      * @param field The field which value should be set.
-     * @param bundle The <tt>ResourceBundle</tt> which belongs to the message class which
+     * @param bundle The {@code ResourceBundle} which belongs to the message class which
      *          is currently processed.
-     * @throws FieldMapperException If assigning the desired value to <tt>field</tt>
+     * @throws FieldMapperException If assigning the desired value to {@code field}
      *          fails.
      * @throws MissingResourceException If a resource is accessed using a name which does
-     *          not exist in the <tt>bundle</tt>.
+     *          not exist in the {@code bundle}.
      */
     public void mapField(ResourceMapping mapping, Field field, ResourceBundle bundle)
             throws FieldMapperException, MissingResourceException;
