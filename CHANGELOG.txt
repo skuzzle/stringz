@@ -1,4 +1,9 @@
 Stringz Changelog
 
+31.08.2014 - v0.2.0
+    * Add Map-like get method to retrieve String values from the Stringz class
+    * Improve memory usage by optimizing bundle caching
+    * Multiple minor improvements
+
 19.07.2014 - v0.1.0
     * Initial Release
