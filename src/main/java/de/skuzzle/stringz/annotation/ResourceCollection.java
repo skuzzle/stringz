@@ -16,10 +16,10 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface ResourceCollection {
     /**
-     * Specifies the names of resources which values should be assigned to the annotated
-     * field. For each name, the default value retrieval is applied. That is, expansion
-     * of {@code ${...}} expressions within resource values is supported for each
-     * referenced name.
+     * Specifies the names of resources which values should be assigned to the
+     * annotated field. For each name, the default value retrieval is applied.
+     * That is, expansion of <code>${...}</code> expressions within resource
+     * values is supported for each referenced name.
      *
      * @return Array of valid resource names.
      */
