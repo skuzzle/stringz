@@ -21,6 +21,7 @@ import de.skuzzle.stringz.annotation.ResourceCollection;
 import de.skuzzle.stringz.annotation.ResourceControl;
 import de.skuzzle.stringz.annotation.ResourceKey;
 import de.skuzzle.stringz.annotation.ResourceMapping;
+import de.skuzzle.stringz.annotation.ValidateArray;
 import de.skuzzle.stringz.strategy.BundleFamilyException;
 import de.skuzzle.stringz.strategy.BundleFamilyLocator;
 import de.skuzzle.stringz.strategy.ControlFactory;
@@ -96,8 +97,8 @@ import de.skuzzle.stringz.strategy.Strategies;
  * bundle which should be mapped to a message class. To simplify the
  * specification of the base name, the default behavior is to use the full
  * qualified name of the message class itself. If your message class is
- * {@code com.you.domain.MSG}, Stringz will use exactly that String as base
- * name to find {@code MSG.properties, MSG_En.properties}, etc. within the same
+ * {@code com.you.domain.MSG}, Stringz will use exactly that String as base name
+ * to find {@code MSG.properties, MSG_En.properties}, etc. within the same
  * package of that class.
  * </p>
  *
@@ -107,8 +108,8 @@ import de.skuzzle.stringz.strategy.Strategies;
  * two explicitly specify a base name:
  * </p>
  * <ol>
- * <li>Define the field {@code public final static String BUNDLE_FAMILY} in
- * your message class. Then, the value of that field will be used as base name.</li>
+ * <li>Define the field {@code public final static String BUNDLE_FAMILY} in your
+ * message class. Then, the value of that field will be used as base name.</li>
  * <li>The preferred way is to specify the base name directly within the
  * {@link ResourceMapping} annotation (e.g.
  * {@code &#64;ResourceMapping("com.your.domain.BaseName")})</li>
@@ -161,8 +162,8 @@ import de.skuzzle.stringz.strategy.Strategies;
  * {@code Control} implementation which uses the
  * {@link ResourceMapping#encoding() charset} specified in the ResourceMapping
  * and creates a {@link java.util.PropertyResourceBundle}. If you want to supply
- * a custom {@code Control} implementation, you can mark your message class
- * with the {@link ResourceControl}. This annotation specifies a
+ * a custom {@code Control} implementation, you can mark your message class with
+ * the {@link ResourceControl}. This annotation specifies a
  * {@link ControlFactory} class which can be used to create a {@code Control}
  * instance which suits your needs. Below is an example usage. First, create
  * your {@code ControlFactory} class:
@@ -234,6 +235,45 @@ import de.skuzzle.stringz.strategy.Strategies;
  * {@link DefaultFieldMapper}.
  * </p>
  *
+ * <h2>Field Validation</h2>
+ * <p>
+ * A common source of errors is the misuse of format specifiers in Strings.
+ * Stringz provides a validation mechanism to fail early if a resource String is
+ * not properly formatted. That is, it contains incorrect number of formatting
+ * arguments, or the used formatting arguments use the wrong conversion
+ * character. Validation can be enabled per field:
+ * </p>
+ *
+ * <pre>
+ * &#064;Validate({ &quot;d&quot;, &quot;s&quot;, &quot;f&quot; })
+ * public static String resourceKey;
+ * </pre>
+ *
+ * <p>
+ * The above declaration requires any String which should be mapped to the field
+ * {@code resourceKey} to have exactly three formatting arguments with the given
+ * conversion characters in the order they are presented in the annotation. If
+ * you want to enable validation for String array fields, you have to specify
+ * the {@link ValidateArray} annotation
+ * </p>
+ *
+ * <pre>
+ * &#064;ResourceCollection({"key1", "key2", "key3"})
+ * &#064;ValidateArray({
+ *     &#064;Validate({ "s" }),     // validator for key1
+ *     &#064;Validate,              // empty validator for key2 (^=no validation)
+ *     &#064;Validate({ "d" "s" })  // validator for key3
+ * })
+ * public static String resourceKey;
+ * </pre>
+ *
+ * <p>
+ * If you use {@code ValidateArray} with a {@code ResourceCollection}, you have
+ * to specify exactly as many Validate entries as the collection contains keys.
+ * If you use it on a delimited String, validation will fail, if splitting the
+ * String yields less entries as specified validators.
+ * </p>
+ *
  * <h2>Extended ResourceBundle Features</h2>
  * <p>
  * Stringz allows you to use normal {@code property} files to define
@@ -253,9 +293,9 @@ import de.skuzzle.stringz.strategy.Strategies;
  * </pre>
  *
  * <p>
- * Accessing the resource with name {@code promptUserName} will yield the
- * String {@code Please insert your Username}. These key references are also
- * applied transitively:
+ * Accessing the resource with name {@code promptUserName} will yield the String
+ * {@code Please insert your Username}. These key references are also applied
+ * transitively:
  * </p>
  *
  * <pre>

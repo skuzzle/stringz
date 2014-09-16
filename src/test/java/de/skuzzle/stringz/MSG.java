@@ -5,6 +5,7 @@ import de.skuzzle.stringz.annotation.NoResource;
 import de.skuzzle.stringz.annotation.ResourceCollection;
 import de.skuzzle.stringz.annotation.ResourceKey;
 import de.skuzzle.stringz.annotation.ResourceMapping;
+import de.skuzzle.stringz.annotation.Validate;
 
 @ResourceMapping("de.skuzzle.stringz.test")
 public class MSG {
@@ -12,24 +13,25 @@ public class MSG {
     static {
         Stringz.init(MSG.class);
     }
-    
+
     public static String testKey1;
     public static String testKey2;
     public static String testKey3;
     public static String testKey4;
     public static String testKey5;
     public static String[] arrayKey;
-    
+
     @Delimiter(",")
     public static String[] commaDelimited;
-    
+
     @ResourceKey("commaDelimited")
     @Delimiter(",")
     public static String[] customMapping;
-    
-    @ResourceCollection({"testKey1", "testKey2"})
+
+    @ResourceCollection(value = { "testKey1", "testKey2" }, validate = { @Validate,
+            @Validate({ "D" }) })
     public static String[] customMapping2;
-    
+
     @NoResource
     public static String testKeyIgnore;
 }
