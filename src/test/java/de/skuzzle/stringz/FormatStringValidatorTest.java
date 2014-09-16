@@ -5,10 +5,6 @@ import org.junit.Test;
 
 public class FormatStringValidatorTest {
 
-    public static void main(String[] args) {
-        String.format("%f", "foo");
-    }
-
     private FormatStringValidator validator;
 
     @Before
