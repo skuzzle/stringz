@@ -258,20 +258,26 @@ import de.skuzzle.stringz.strategy.Strategies;
  * </p>
  *
  * <pre>
- * &#064;ResourceCollection({"key1", "key2", "key3"})
+ * &#064;ResourceCollection({ &quot;key1&quot;, &quot;key2&quot;, &quot;key3&quot; })
  * &#064;ValidateArray({
- *     &#064;Validate({ "s" }),     // validator for key1
- *     &#064;Validate,              // empty validator for key2 (^=no validation)
- *     &#064;Validate({ "d" "s" })  // validator for key3
+ *         &#064;Validate({ &quot;s&quot; }),      // validator for key1
+ *         &#064;Validate,               // empty validator for key2 (&circ;=no validation)
+ *         &#064;Validate({ &quot;d&quot;, &quot;s&quot; })  // validator for key3
  * })
- * public static String resourceKey;
+ * public static String[] resourceKey;
+ *
+ * &#064;ValidateArray({
+ *         &#064;Validate({ &quot;s&quot; }),      // validator for key1
+ *         &#064;Validate({ &quot;d&quot;, &quot;s&quot; })  // validator for key2
+ * })
+ * public static String[] resourceKey2;
  * </pre>
  *
  * <p>
  * If you use {@code ValidateArray} with a {@code ResourceCollection}, you have
  * to specify exactly as many Validate entries as the collection contains keys.
- * If you use it on a delimited String, validation will fail, if splitting the
- * String yields less entries as specified validators.
+ * If you use it on a delimited String, validation will fail if splitting the
+ * String yields different count of entries than Validate elements specified.
  * </p>
  *
  * <h2>Extended ResourceBundle Features</h2>
