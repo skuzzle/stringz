@@ -5,7 +5,6 @@ import de.skuzzle.stringz.annotation.NoResource;
 import de.skuzzle.stringz.annotation.ResourceCollection;
 import de.skuzzle.stringz.annotation.ResourceKey;
 import de.skuzzle.stringz.annotation.ResourceMapping;
-import de.skuzzle.stringz.annotation.Validate;
 
 @ResourceMapping("de.skuzzle.stringz.test")
 public class MSG {
@@ -28,8 +27,7 @@ public class MSG {
     @Delimiter(",")
     public static String[] customMapping;
 
-    @ResourceCollection(value = { "testKey1", "testKey2" }, validate = { @Validate,
-            @Validate({ "D" }) })
+    @ResourceCollection(value = { "testKey1", "testKey2" })
     public static String[] customMapping2;
 
     @NoResource

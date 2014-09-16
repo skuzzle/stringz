@@ -28,7 +28,7 @@ class RStringFieldMapper extends DefaultFieldMapper {
 
         field.setAccessible(true);
         final String resourceKey = getResourceKey(field);
-        final String value = getValue(mapping, bundle, resourceKey);
+        final String value = getValue(mapping, bundle, null, resourceKey);
         final RString extValue = mapping.intern()
                 ? RString.intern(value)
                 : new RString(value);
