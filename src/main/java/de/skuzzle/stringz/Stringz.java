@@ -595,6 +595,21 @@ public final class Stringz {
     }
 
     /**
+     * formats the given String {@code f} using
+     * {@link String#format(Locale, String, Object...)} with the provided
+     * {@code args} and the currently set {@link #setLocale(Locale) locale}.
+     *
+     * @param f The String to format.
+     * @param args The format arguments.
+     * @return The formatted string.
+     * @see String#format(Locale, String, Object...)
+     * @since 0.3.0
+     */
+    public static String format(String f, Object... args) {
+        return String.format(locale, f, args);
+    }
+
+    /**
      * Provides map-like access to the value of a resource key. This method uses
      * reflection to figure out the value of {@code field} within the provided
      * class {@code msg}. The field must be static and declared as String.
@@ -603,6 +618,8 @@ public final class Stringz {
      * @param field The field which value should be read.
      * @return The String value which is assigned to the field. If the field
      *         does not exist or is not a String, <code>null</code> is returned.
+     * @throws StringzRuntimeException If the field could not be found or not be
+     *             read using reflection.
      * @since 0.2.0
      */
     public static String get(Class<?> msg, String field) {
@@ -615,15 +632,9 @@ public final class Stringz {
                 return null;
             }
             return (String) f.get(null);
-        } catch (NoSuchFieldException e) {
-            return null;
-        } catch (SecurityException e) {
-            e.printStackTrace();
-            return null;
-        } catch (IllegalArgumentException e) {
-            return null;
-        } catch (IllegalAccessException e) {
-            return null;
+        } catch (NoSuchFieldException | SecurityException | IllegalArgumentException |
+                IllegalAccessException e) {
+            throw new StringzRuntimeException(e);
         }
     }
 
