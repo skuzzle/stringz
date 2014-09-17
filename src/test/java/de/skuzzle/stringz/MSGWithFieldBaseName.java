@@ -4,7 +4,7 @@ import de.skuzzle.stringz.annotation.ResourceMapping;
 
 @ResourceMapping
 public class MSGWithFieldBaseName {
-    public final static String BUNDLE_FAMILY = "de.skuzzle.stringz.test";
+    public static final String BUNDLE_FAMILY = "de.skuzzle.stringz.test";
     
     static {
         Stringz.init(MSGWithFieldBaseName.class);

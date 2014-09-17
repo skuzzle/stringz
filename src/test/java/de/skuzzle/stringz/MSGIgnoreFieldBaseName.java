@@ -6,7 +6,7 @@ import de.skuzzle.stringz.annotation.ResourceMapping;
 public class MSGIgnoreFieldBaseName {
     
     // should be ignored
-    public final static String BUNDLE_FAMILY = "de.skuzzle.stringz.test2";
+    public static final String BUNDLE_FAMILY = "de.skuzzle.stringz.test2";
     
     static {
         Stringz.init(MSGIgnoreFieldBaseName.class);

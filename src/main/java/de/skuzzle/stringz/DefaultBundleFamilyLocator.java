@@ -20,7 +20,7 @@ import de.skuzzle.stringz.strategy.BundleFamilyLocator;
 public class DefaultBundleFamilyLocator implements BundleFamilyLocator {
 
     /** Default name of the field which is looked up */
-    protected final static String BUNDLE_FAMILY_FIELD = "BUNDLE_FAMILY";
+    protected static final String BUNDLE_FAMILY_FIELD = "BUNDLE_FAMILY";
 
     @Override
     public String locateBundleFamily(Class<?> messages) {

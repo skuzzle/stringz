@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  */
 class ExtendedBundle extends ResourceBundle {
 
-    private final static String INCLUDE_KEY = "@include";
+    private static final String INCLUDE_KEY = "@include";
 
     public static ResourceBundle getBundle(String baseName,
             Locale targetLocale, ClassLoader loader, Control control) {
@@ -28,7 +28,7 @@ class ExtendedBundle extends ResourceBundle {
         return new ExtendedBundle(bundle, baseName, targetLocale, control);
     }
 
-    private final static Pattern REPLACE = Pattern.compile("\\$\\{([^}]+)\\}");
+    private static final Pattern REPLACE = Pattern.compile("\\$\\{([^}]+)\\}");
     private final ResourceBundle wrapped;
     private final Control control;
     private final Locale locale;

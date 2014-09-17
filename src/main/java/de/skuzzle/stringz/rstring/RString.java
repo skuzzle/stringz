@@ -5,9 +5,9 @@ import java.util.Map;
 
 class RString {
 
-    private final static Map<String, RString> INTERN_CACHE = new HashMap<>();
+    private static final Map<String, RString> INTERN_CACHE = new HashMap<>();
 
-    public final static RString EMPTY = new RString("").intern();
+    public static final RString EMPTY = new RString("").intern();
 
     public static RString intern(String s) {
         synchronized (INTERN_CACHE) {

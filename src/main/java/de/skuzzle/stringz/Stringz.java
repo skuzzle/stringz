@@ -108,7 +108,7 @@ import de.skuzzle.stringz.strategy.Strategies;
  * two explicitly specify a base name:
  * </p>
  * <ol>
- * <li>Define the field {@code public final static String BUNDLE_FAMILY} in your
+ * <li>Define the field {@code public static final String BUNDLE_FAMILY} in your
  * message class. Then, the value of that field will be used as base name.</li>
  * <li>The preferred way is to specify the base name directly within the
  * {@link ResourceMapping} annotation (e.g.
@@ -343,22 +343,22 @@ public final class Stringz {
      * Registered locators to find the bundle family name for a Messages
      * implementation
      */
-    private final static Map<Class<? extends BundleFamilyLocator>, BundleFamilyLocator>
+    private static final Map<Class<? extends BundleFamilyLocator>, BundleFamilyLocator>
         FAMILY_LOCATORS = new HashMap<>();
 
     /** Holds all classes which have already been initialized */
-    private final static Set<Class<?>> initialized = new HashSet<>();
+    private static final Set<Class<?>> initialized = new HashSet<>();
 
     /**
      * The default FieldMapper for classes which have no {@link FieldMapping}
      * annotation
      */
-    private final static FieldMapper DEFAULT_FIELD_MAPPER = new DefaultFieldMapper();
+    private static final FieldMapper DEFAULT_FIELD_MAPPER = new DefaultFieldMapper();
 
     /**
      * The default Strategy.
      */
-    private final static Strategies DEFAULT_STRATEGIES = new CachedStrategies();
+    private static final Strategies DEFAULT_STRATEGIES = new CachedStrategies();
 
 
     /** The default locale to use */
@@ -633,7 +633,7 @@ public final class Stringz {
      * that name is returned. Otherwise, if the class is annotated with
      * {@link FamilyLocator}, a {@link BundleFamilyLocator} is looked up and used to
      * find the base name. If no FamilyLocator is specified, it is checked whether the
-     * class contains a {@code public final static String BUNDLE_FAMILY} field. If so,
+     * class contains a {@code public static final String BUNDLE_FAMILY} field. If so,
      * the value of that field will be used as base name. If no such field is given,
      * the full qualified name of the passed class is used.
      *
