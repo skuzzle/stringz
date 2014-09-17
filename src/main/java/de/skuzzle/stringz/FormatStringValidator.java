@@ -6,6 +6,12 @@ import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Parses format Strings and checks them against expected conversion characters.
+ *
+ * @author Simon Taddiken
+ * @since 0.3.0
+ */
 public class FormatStringValidator {
 
     // %[argument_index$][flags][width][.precision][t]conversion
@@ -78,14 +84,13 @@ public class FormatStringValidator {
             ensureIndexExists(conversions, index);
             final String existingConversion = conversions.get(index);
 
-            if (existingConversion != null) {
+            if (existingConversion != null &&
+                    !existingConversion.equalsIgnoreCase(conversion)) {
                 // two format strings referencing the same argument
-                if (!existingConversion.equalsIgnoreCase(conversion)) {
-                    // ... with two different conversions
-                    throw new FormatValidationException(String.format(
-                            "Argument with index %d is referenced through at least two different conversion characters: '%s' and '%s'",
-                            index, conversion, existingConversion));
-                }
+                // ... with two different conversions
+                throw new FormatValidationException(String.format(
+                        "Argument with index %d is referenced through at least two different conversion characters: '%s' and '%s'",
+                        index, conversion, existingConversion));
             }
 
             conversions.set(index, conversion);
