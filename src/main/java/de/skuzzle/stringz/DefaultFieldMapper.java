@@ -55,7 +55,7 @@ public class DefaultFieldMapper implements FieldMapper {
      *
      * <p>
      * Implements the default field assignment strategy for {@code Stringz}. If
-     * field has any other type than {@code String</tt> or <tt>String[]}, an
+     * field has any other type than {@code String} or {@code String[]}, an
      * exception will be caused. The value for the field will be retrieved using
      * {@link ResourceBundle#getString(String)}. If the passed ResourceMapping's
      * {@code intern} attribute is <code>true</code>, {@link String#intern()}
@@ -90,62 +90,9 @@ public class DefaultFieldMapper implements FieldMapper {
                 final ResourceCollection rc = field.getAnnotation(
                         ResourceCollection.class);
 
-                if (rc.value().length == 0) {
-                    throw new FieldMapperException(
-                            "@ResourceCollection must specify at least one mapping key");
-                }
-
-                Validate[] validators = null;
-                if (field.isAnnotationPresent(ValidateArray.class)) {
-                    validators = field.getAnnotation(ValidateArray.class).value();
-                }
-
-                if (validators != null && validators.length != rc.value().length) {
-                    // when specifying validators, there must be as many as
-                    // there are values
-                    throw new FieldMapperException(String.format(
-                            "@ResourceCollection contains %d values, but %d validators",
-                            rc.value().length, validators.length));
-                }
-
-                final String[] v = new String[rc.value().length];
-                for (int i = 0; i < v.length; ++i) {
-                    Validate validate = null;
-                    if (validators != null) {
-                        validate = validators[i];
-                    }
-                    final String resourceKey = rc.value()[i];
-                    v[i] = getValue(mapping, bundle, validate, resourceKey);
-                }
-                value = v;
+                value = handleResourceCollection(field, mapping, bundle, rc);
             } else {
-
-                final String delimiterPattern;
-                if (field.isAnnotationPresent(Delimiter.class)) {
-                    final Delimiter delimiter = field.getAnnotation(Delimiter.class);
-                    delimiterPattern = delimiter.value();
-                } else {
-                    delimiterPattern = DEFAULT_DELIMITER;
-                }
-
-                final String resourceKey = getResourceKey(field);
-                final String resource = getValue(mapping, bundle, null, resourceKey);
-                final String[] splitted = resource.split(delimiterPattern);
-                value = splitted;
-
-                if (field.isAnnotationPresent(ValidateArray.class)) {
-                    final ValidateArray validateArr = field.getAnnotation(
-                            ValidateArray.class);
-                    if (validateArr.value().length != splitted.length) {
-                        throw new FieldMapperException(String.format(
-                                "Splitted resource contains %d values, but %d validators",
-                                splitted.length, validateArr.value().length));
-                    }
-                    for (int i = 0; i < splitted.length; ++i) {
-                        final Validate validate = validateArr.value()[i];
-                        this.validator.parseFormatString(splitted[i], validate.value());
-                    }
-                }
+                value = handleDelimittedString(field, mapping, bundle);
             }
         } else {
             // should not be reachable as by #accept method
@@ -159,6 +106,88 @@ public class DefaultFieldMapper implements FieldMapper {
                     "Resource initialization failed. family=%s, field=%s, value=%s",
                     mapping.value(), field.getName(), value), e);
         }
+    }
+
+    /**
+     * Maps an array to the resources listed in a {@link ResourceCollection}
+     * annotation.
+     *
+     * @param field The target field.
+     * @param mapping The ResourceMapping annotation of the currently processed
+     *            message class.
+     * @param bundle The resolved ResourceBundle for that class.
+     * @param rc The ResourceCollection annotation of that field.
+     * @return The created String array.
+     * @since 0.3.0
+     */
+    protected String[] handleResourceCollection(Field field, ResourceMapping mapping,
+            ResourceBundle bundle, ResourceCollection rc) {
+        if (rc.value().length == 0) {
+            throw new FieldMapperException(
+                    "@ResourceCollection must specify at least one mapping key");
+        }
+
+        Validate[] validators = null;
+        if (field.isAnnotationPresent(ValidateArray.class)) {
+            validators = field.getAnnotation(ValidateArray.class).value();
+        }
+
+        if (validators != null && validators.length != rc.value().length) {
+            // when specifying validators, there must be as many as
+            // there are values
+            throw new FieldMapperException(String.format(
+                    "@ResourceCollection contains %d values, but %d validators",
+                    rc.value().length, validators.length));
+        }
+
+        final String[] v = new String[rc.value().length];
+        for (int i = 0; i < v.length; ++i) {
+            Validate validate = null;
+            if (validators != null) {
+                validate = validators[i];
+            }
+            final String resourceKey = rc.value()[i];
+            v[i] = getValue(mapping, bundle, validate, resourceKey);
+        }
+        return v;
+    }
+
+    /**
+     * Maps an array to a resource which is split using a delimiter.
+     *
+     * @param field The target field.
+     * @param mapping The ResourceMapping annotation of the currently processed
+     *            message class.
+     * @param bundle The resolved ResourceBundle for that class.
+     * @return The resulting array.
+     */
+    protected String[] handleDelimittedString(Field field, ResourceMapping mapping,
+            ResourceBundle bundle) {
+        final String delimiterPattern;
+        if (field.isAnnotationPresent(Delimiter.class)) {
+            final Delimiter delimiter = field.getAnnotation(Delimiter.class);
+            delimiterPattern = delimiter.value();
+        } else {
+            delimiterPattern = getDefaultDelimiter();
+        }
+
+        final String resourceKey = getResourceKey(field);
+        final String resource = getValue(mapping, bundle, null, resourceKey);
+        final String[] splitted = resource.split(delimiterPattern);
+
+        if (field.isAnnotationPresent(ValidateArray.class)) {
+            final ValidateArray validateArr = field.getAnnotation(ValidateArray.class);
+            if (validateArr.value().length != splitted.length) {
+                throw new FieldMapperException(String.format(
+                        "Splitted resource contains %d values, but %d validators",
+                        splitted.length, validateArr.value().length));
+            }
+            for (int i = 0; i < splitted.length; ++i) {
+                final Validate validate = validateArr.value()[i];
+                this.validator.parseFormatString(splitted[i], validate.value());
+            }
+        }
+        return splitted;
     }
 
     /**
